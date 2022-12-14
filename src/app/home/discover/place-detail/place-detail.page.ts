@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ActionSheetController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -13,9 +13,18 @@ import { PlacesService } from '../../places.service';
   templateUrl: './place-detail.page.html',
   styleUrls: ['./place-detail.page.scss'],
 })
-export class PlaceDetailPage implements OnInit, OnDestroy {
-  place: Place;
-  isBookable = false;
+export class PlaceDetailPage implements OnDestroy {
+  place = {
+    id: 0,
+    title: 'place',
+    description: 'string',
+    imageURL: 'string',
+    price: 0,
+    availableFrom: 'string',
+    availableTo: 'string',
+    userId: 'string'
+  };
+  isBookable = true;
   private placeSub: Subscription;
 
   constructor(
@@ -26,24 +35,39 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
     private actionSheetCtrl: ActionSheetController,
     private bookingService: BookingService,
     private loadingController: LoadingController,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
 
-  ngOnInit() {
-    this.route.paramMap.subscribe((paramMap) => {
-      if (!paramMap.has('placeId')) {
-        this.navCtrl.navigateBack('/home/tabs/offers');
-        return;
-      }
-      this.placeSub = this.placesService.getPlace(paramMap.get('placeId')).subscribe(place => {
-        this.place = place;
-        this.isBookable = place.userId !== this.authService.userId;
-      });
-    });
+  ionViewWillEnter(){
+    this.getPlaceById(this.getIDfromURL());
   }
-
+  //NEW
+  getPlaceById(place: number){
+    this.placesService.getPlaceById(place).subscribe(
+      (resp: any) => {
+        this.place = {
+          id: resp[0].id,
+          title: resp[0].title,
+          description: resp[0].description,
+          imageURL: resp[0].imageURL,
+          price: resp[0].price,
+          availableFrom: resp[0].availableFrom,
+          availableTo: resp[0].availableTo,
+          userId: resp[0].userId
+        };
+      }
+    );
+  }
+  getIDfromURL(){
+    const url = this.router.url;
+    const arr = url.split('/', 5);
+    const id = parseInt(arr[4],10);
+    console.log('el numero en el url es: '+id);
+    return id;
+  }
+  //PAST
   onBookPlace() {
-    //this.navCtrl.navigateBack('/home/tabs/discover');
     this.actionSheetCtrl.create({
       header: 'Choose an action',
       buttons: [
@@ -89,7 +113,7 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
             loadingEl.present();
             const data = resultData.data.bookingData;
             this.bookingService.addBooking(
-              this.place.id,
+              '0',
               this.place.title,
               this.place.imageURL,
               data.first,

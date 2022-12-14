@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>New Offer</ion-title>
     <ion-buttons slot="primary">
-      <ion-button (click)="onCreateOffer()" [disabled]="!form.valid">
+      <ion-button (click)="createPlace()" [disabled]="!form.valid">
         <ion-icon slot="icon-only" name="checkmark"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -20,6 +20,15 @@
           <ion-item>
             <ion-label position="floating">Title</ion-label>
             <ion-input type="text" autocomplete autocorrect formControlName="title"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-sm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Image</ion-label>
+            <ion-input type="text" formControlName="imageURL"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -58,7 +67,7 @@
                   presentation="date"
                   slot="date-target"
                   id="datetime"
-                  min="2023-01-01"
+                  min="2022-12-01"
                   max="2024-12-30"
                   formControlName="dateFrom"
                 >
@@ -77,7 +86,7 @@
                   presentation="date"
                   slot="date-target"
                   id="datetime2"
-                  min="2023-01-02"
+                  min="2022-12-02"
                   max="2024-12-31"
                   formControlName="dateTo"
                 >
