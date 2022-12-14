@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class AuthService {
   private userisAuth = true;
   private idUser = 'abc';
+  //FALTA CREAR METODOS PARA REGISTRO, GUARDAR DATA DE USUARIOS Y VALIDAR LOGIN
 
   constructor() {}
 
