@@ -7,4 +7,5 @@ export interface PlacesData {
   availableFrom: string;
   availableTo: string;
   userId: string;
+  location: string;
 }

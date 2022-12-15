@@ -97,6 +97,11 @@
           </ion-item>
         </ion-col>
       </ion-row>
+      <ion-row size-sm="3" offset-sm="3">
+        <div class="mapaDiv">
+          <app-location-picker (locationPick)="onLocationPicked($event)"></app-location-picker>
+        </div>
+      </ion-row>
     </ion-grid>
   </form>
 </ion-content>

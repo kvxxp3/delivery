@@ -22,7 +22,8 @@ export class PlaceDetailPage implements OnDestroy {
     price: 0,
     availableFrom: 'string',
     availableTo: 'string',
-    userId: 'string'
+    userId: 'string',
+    location: 'string'
   };
   isBookable = true;
   private placeSub: Subscription;
@@ -54,7 +55,8 @@ export class PlaceDetailPage implements OnDestroy {
           price: resp[0].price,
           availableFrom: resp[0].availableFrom,
           availableTo: resp[0].availableTo,
-          userId: resp[0].userId
+          userId: resp[0].userId,
+          location: resp[0].location
         };
       }
     );

@@ -22,6 +22,12 @@
     </ion-row>
   </ion-grid>
 
+  <ion-row>
+    <ion-col sizeSm="6" offsetSm="3" text-center>
+      <p>{{ place.location }}</p>
+    </ion-col>
+  </ion-row>
+
   <ion-row *ngIf="isBookable">
     <ion-col sizeSm="6" offsetSm="3">
       <ion-button
