@@ -1,6 +1,6 @@
 .picker {
-    width: 30rem;
-    max-width: 80%;
+    width: 40vh;
+    max-width: 90%;
     height: 20rem;
     max-height: 30vh;
     border: 1px solid var(--ion-color-primary);
@@ -8,7 +8,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    align-content: center;
 }
 
 .location-image {

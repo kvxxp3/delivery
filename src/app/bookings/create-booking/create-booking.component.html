@@ -58,8 +58,8 @@
                   presentation="date"
                   slot="date-target"
                   id="datetime"
-                  [min]="selectedPlace.availableFrom.toISOString()"
-                  [max]="selectedPlace.availableTo.toISOString()"
+                  min="2022-12-01"
+                  max="2024-12-30"
                   [ngModel]="startDate"
                   name="dateFrom"
                   required
@@ -80,8 +80,8 @@
                   presentation="date"
                   slot="date-target"
                   id="datetime2"
-                  [min]="selectedPlace.availableFrom.toISOString()"
-                  [max]="selectedPlace.availableTo.toISOString()"
+                  min="2022-12-01"
+                  max="2024-12-30"
                   [ngModel]="endDate"
                   name="dateTo"
                   required
@@ -109,3 +109,8 @@
     </ion-grid>
   </form>
 </ion-content>
+
+<!--[min]="selectedPlace.availableFrom.toISOString()"
+                  [max]="selectedPlace.availableTo.toISOString()"
+                  
+                  -->

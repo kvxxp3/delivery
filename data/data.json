@@ -8,7 +8,8 @@
       "price": 399.99,
       "availableFrom": "2023-04-01",
       "availableTo": "2023-04-28",
-      "userId": "abc"
+      "userId": "abc",
+      "location": "RathausPassagen, Rathausstraße 1-14, 10178 Berlin, Germany"
     },
     {
       "id": 3,
@@ -18,7 +19,8 @@
       "price": 458.23,
       "availableFrom": "2022-12-06",
       "availableTo": "2022-12-29",
-      "userId": "xyz"
+      "userId": "xyz",
+      "location": "Calle Ignacio López Rayón 11, 54942 Buenavista, MEX, Mexico"
     },
     {
       "id": 6,
@@ -28,7 +30,44 @@
       "price": 429.99,
       "availableFrom": "2023-12-15",
       "availableTo": "2024-09-30",
-      "userId": "xyz"
+      "userId": "xyz",
+      "location": "35 Rue Alquié, 03200 Vichy, France"
+    },
+    {
+      "title": "London",
+      "description": "Primer prueba con direccion",
+      "imageURL": "https://patch.com/img/cdn20/users/23221850/20190211/045748/styles/raw/public/processed_images/mcnally_jackson_via_google_maps-1549922264-1541.jpg?width=695",
+      "price": 106.99,
+      "availableFrom": "2022-12-22",
+      "availableTo": "2023-02-10",
+      "userId": "abc",
+      "location": "Roman Southwark, 8 Bedale Street, London, SE1 0EX, United Kingdom",
+      "id": 7
+    },
+    {
+      "title": "Casa de Daniel",
+      "description": "Segunda prueba para la direccion",
+      "imageURL": "https://th.bing.com/th/id/R.e7623cc17273fe60fb7fb53dd486476a?rik=PcoIw4djUk2hHg&pid=ImgRaw&r=0",
+      "price": 1430.5,
+      "availableFrom": "2022-12-26",
+      "availableTo": "2022-12-31",
+      "userId": "abc",
+      "location": "Daniel House, 133 Fleet Street, City of London, EC4A 2BB, United Kingdom",
+      "id": 8
+    }
+  ],
+  "bookings": [
+    {
+      "id": "1",
+      "placeId": "8",
+      "userId": "2",
+      "placeTitle": "Casa de Daniel",
+      "placeImg": "https://th.bing.com/th/id/R.e7623cc17273fe60fb7fb53dd486476a?rik=PcoIw4djUk2hHg&pid=ImgRaw&r=0",
+      "firstName": "Karla",
+      "lastName": "Quezada",
+      "guestNumber": 2,
+      "bookedFrom": "2022-12-23",
+      "bookedTo": "2022-12-31"
     }
   ]
 }

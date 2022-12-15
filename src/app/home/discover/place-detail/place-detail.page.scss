@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
+ion-content {
+    font-family: 'Raleway';
+}
+
+p{
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.tumblrTitle{
+    font-weight: bold;
+}
+
+.tumblrDiv{
+    margin: 15px;
+    padding: 15px;
+    background-color: rgb(220, 239, 245);
+    border-radius: 15px;
+}
+
+.imgTumblr {
+    max-height: 40rem;
+}

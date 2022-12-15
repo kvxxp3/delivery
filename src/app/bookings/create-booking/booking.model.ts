@@ -1,4 +1,4 @@
-export class Booking {
+export class BookingModel {
   constructor(
     public id: string,
     public placeId: string,
