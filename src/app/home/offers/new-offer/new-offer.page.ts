@@ -22,7 +22,8 @@ export class NewOfferPage implements OnInit {
     price: 0,
     availableFrom: '2023-06-24',
     availableTo: '2023-06-24',
-    userId: 'string'
+    userId: 'string',
+    location: 'string'
   };
 
   constructor(public datePipe: DatePipe, private placesService: PlacesService, private router: Router, private loadingCtrl: LoadingController, private authService: AuthService) { }
@@ -52,8 +53,15 @@ export class NewOfferPage implements OnInit {
       dateTo: new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required]
+      }),
+      location: new FormControl(null, {
+        validators: [Validators.required]
       })
     });
+  }
+
+  onLocationPicked(location: string){
+    this.form.patchValue({location: location});
   }
 
   onCreateOffer() {
@@ -96,6 +104,7 @@ export class NewOfferPage implements OnInit {
       this.newPlace.price = this.form.value.price;
       this.newPlace.availableFrom = this.datePipe.transform(this.form.value.dateFrom,'yyyy-MM-dd');
       this.newPlace.availableTo = this.datePipe.transform(this.form.value.dateTo,'yyyy-MM-dd');
+      this.newPlace.location = this.form.value.location;
 
       this.placesService.newPlace(this.newPlace).subscribe(() => {
         loadingEl.dismiss();
