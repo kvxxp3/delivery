@@ -17,6 +17,7 @@
 
     <ion-row>
       <ion-col sizeSm="6" offsetSm="3">
+        <p style="font-weight: bold;">Description:</p>
         <p>{{ place.description }}</p>
       </ion-col>
     </ion-row>
@@ -24,7 +25,22 @@
 
   <ion-row>
     <ion-col sizeSm="6" offsetSm="3" text-center>
+      <p style="font-weight: bold;">Address:</p>
       <p>{{ place.location }}</p>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col sizeSm="6" offsetSm="3" text-center>
+      <p style="font-weight: bold;">Price per night:</p>
+      <p>{{ place.price }}</p>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col sizeSm="6" offsetSm="3" text-center>
+      <p style="font-weight: bold;">Available dates:</p>
+      <p>{{ place.availableFrom }} <br> to <br> {{ place.availableTo }}</p>
     </ion-col>
   </ion-row>
 
@@ -38,6 +54,14 @@
       >
         Book
       </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="tumblrDiv">
+    <ion-col sizeSm="6" offsetSm="3">
+      <p class="tumblrTitle"> << Tumblr Post >> </p>
+      <a [href]="postTumblr.url"><ion-img class="imgTumblr" [src]="postTumblr.imagen"></ion-img></a>
+      <p>{{ postTumblr.caption }}</p>
     </ion-col>
   </ion-row>
 </ion-content>

@@ -2,18 +2,19 @@
   "places": [
     {
       "id": 2,
-      "title": "[EDITED] Killarney Mansion by ABC",
-      "description": "His majesty's manor.",
+      "title": "Killarney Mansion by ABC",
+      "description": "A well made mansion, ideal for those who want more space.",
       "imageURL": "https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto",
       "price": 399.99,
       "availableFrom": "2023-04-01",
       "availableTo": "2023-04-28",
-      "userId": "abc"
+      "userId": "abc",
+      "location": "RathausPassagen, Rathausstraße 1-14, 10178 Berlin, Germany"
     },
     {
       "id": 3,
-      "title": "[EDITED]nuevo",
-      "description": "nuevo nuevo",
+      "title": "Casa de Alejandro R.",
+      "description": "Enjoy a beautiful sight near the city, the nearest school is only 1km apart.",
       "imageURL": "https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto",
       "price": 458.23,
       "availableFrom": "2022-12-06",
@@ -23,8 +24,8 @@
     },
     {
       "id": 6,
-      "title": "[EDITED]Casa bonita",
-      "description": "[EDITED]ult prueba de metodo post",
+      "title": "La maison de Paul",
+      "description": "Our house has enough space for more than 2 students. Pet friendly.",
       "imageURL": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto",
       "price": 429.99,
       "availableFrom": "2023-12-15",
@@ -33,8 +34,19 @@
       "location": "35 Rue Alquié, 03200 Vichy, France"
     },
     {
-      "title": "Casa de Daniel",
-      "description": "Segunda prueba para la direccion",
+      "title": "London's apartment",
+      "description": "Humble apartment for one student. You can find nearby fancy restaurants.",
+      "imageURL": "https://patch.com/img/cdn20/users/23221850/20190211/045748/styles/raw/public/processed_images/mcnally_jackson_via_google_maps-1549922264-1541.jpg?width=695",
+      "price": 106.99,
+      "availableFrom": "2022-12-22",
+      "availableTo": "2023-02-10",
+      "userId": "abc",
+      "location": "Roman Southwark, 8 Bedale Street, London, SE1 0EX, United Kingdom",
+      "id": 7
+    },
+    {
+      "title": "Casa de Karla",
+      "description": "Fancy house for more than 3 students. Must respect rules. Pet friendly.",
       "imageURL": "https://th.bing.com/th/id/R.e7623cc17273fe60fb7fb53dd486476a?rik=PcoIw4djUk2hHg&pid=ImgRaw&r=0",
       "price": 1430.5,
       "availableFrom": "2022-12-26",
@@ -44,9 +56,9 @@
       "id": 8
     },
     {
-      "title": "nuevo",
-      "description": "desde el cel",
-      "imageURL": "https://images.app.goo.gl/ofhj7CoWmg65k2vx7",
+      "title": "Doctor House",
+      "description": "Perfect house for students who have any illness.",
+      "imageURL": "https://img10.naventcdn.com/avisos/resize/18/00/54/67/66/95/1200x1200/217186356.jpg",
       "price": 532.99,
       "availableFrom": "2022-12-23",
       "availableTo": "2024-11-30",
@@ -103,6 +115,56 @@
       "email": "vieabyrvg@vn.com",
       "psw": "viheabr",
       "userId": "vnivine"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "1",
+      "placeId": "8",
+      "userId": "2",
+      "placeTitle": "Casa de Daniel",
+      "placeImg": "https://th.bing.com/th/id/R.e7623cc17273fe60fb7fb53dd486476a?rik=PcoIw4djUk2hHg&pid=ImgRaw&r=0",
+      "firstName": "Karla",
+      "lastName": "Quezada",
+      "guestNumber": 3,
+      "bookedFrom": "2022-12-23",
+      "bookedTo": "2022-12-31"
+    },
+    {
+      "id": "2",
+      "placeId": "6",
+      "userId": "6",
+      "placeTitle": "La maison de Paul",
+      "placeImg": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto",
+      "firstName": "Paulo",
+      "lastName": "Olvera",
+      "guestNumber": 2,
+      "bookedFrom": "2022-12-23",
+      "bookedTo": "2022-12-31"
+    },
+    {
+      "id": "3",
+      "placeId": "7",
+      "userId": "1",
+      "placeTitle": "London's apartment",
+      "placeImg": "https://patch.com/img/cdn20/users/23221850/20190211/045748/styles/raw/public/processed_images/mcnally_jackson_via_google_maps-1549922264-1541.jpg?width=695",
+      "firstName": "Paola",
+      "lastName": "Alba",
+      "guestNumber": 1,
+      "bookedFrom": "2022-12-23",
+      "bookedTo": "2023-01-11"
+    },
+    {
+      "id": "3",
+      "placeId": "3",
+      "userId": "4",
+      "placeTitle": "Casa de Alejandro R.",
+      "placeImg": "https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto",
+      "firstName": "Pedro",
+      "lastName": "Sola",
+      "guestNumber": 2,
+      "bookedFrom": "2022-12-23",
+      "bookedTo": "2022-12-31"
     }
   ]
 }
