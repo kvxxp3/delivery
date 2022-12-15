@@ -2,7 +2,7 @@
   "places": [
     {
       "id": 2,
-      "title": "Killarney Mansion by ABC",
+      "title": "[EDITED] Killarney Mansion by ABC",
       "description": "His majesty's manor.",
       "imageURL": "https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto",
       "price": 399.99,
@@ -18,7 +18,8 @@
       "price": 458.23,
       "availableFrom": "2022-12-06",
       "availableTo": "2022-12-29",
-      "userId": "xyz"
+      "userId": "xyz",
+      "location": "Calle Ignacio López Rayón 11, 54942 Buenavista, MEX, Mexico"
     },
     {
       "id": 6,
@@ -28,7 +29,80 @@
       "price": 429.99,
       "availableFrom": "2023-12-15",
       "availableTo": "2024-09-30",
+      "userId": "xyz",
+      "location": "35 Rue Alquié, 03200 Vichy, France"
+    },
+    {
+      "title": "Casa de Daniel",
+      "description": "Segunda prueba para la direccion",
+      "imageURL": "https://th.bing.com/th/id/R.e7623cc17273fe60fb7fb53dd486476a?rik=PcoIw4djUk2hHg&pid=ImgRaw&r=0",
+      "price": 1430.5,
+      "availableFrom": "2022-12-26",
+      "availableTo": "2022-12-31",
+      "userId": "abc",
+      "location": "Daniel House, 133 Fleet Street, City of London, EC4A 2BB, United Kingdom",
+      "id": 8
+    },
+    {
+      "title": "nuevo",
+      "description": "desde el cel",
+      "imageURL": "https://images.app.goo.gl/ofhj7CoWmg65k2vx7",
+      "price": 532.99,
+      "availableFrom": "2022-12-23",
+      "availableTo": "2024-11-30",
+      "userId": "abc",
+      "location": "London Bridge Hospital, 27 Tooley Street, London, SE1 2PR, United Kingdom",
+      "id": 9
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "abc123@gmail.com",
+      "psw": "abc123abc",
+      "userId": "abc"
+    },
+    {
+      "id": 2,
+      "email": "xyz321@gmail.com.com",
+      "psw": "xyz321xyz",
       "userId": "xyz"
+    },
+    {
+      "id": 3,
+      "email": "quezadakarla2406@gmail.com",
+      "psw": "contrasegura911",
+      "userId": "karlaQ"
+    },
+    {
+      "id": 4,
+      "email": "string",
+      "psw": "string",
+      "userId": "string"
+    },
+    {
+      "id": 5,
+      "email": "ivbeib@vusub.com",
+      "psw": "cbieuwf7492",
+      "userId": "karlaQ"
+    },
+    {
+      "id": 6,
+      "email": "vibgrvi@vbfihrg.com",
+      "psw": "bivef",
+      "userId": "karlaQ"
+    },
+    {
+      "id": 7,
+      "email": "quezadakarla2406@gmail.com",
+      "psw": "brth4",
+      "userId": "bevifr"
+    },
+    {
+      "id": 8,
+      "email": "vieabyrvg@vn.com",
+      "psw": "viheabr",
+      "userId": "vnivine"
     }
   ]
 }
