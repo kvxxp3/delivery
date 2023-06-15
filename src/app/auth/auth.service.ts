@@ -11,6 +11,7 @@ export class AuthService {
   private userisAuth = true;
   //no se si deba quitar el private
   private idUser = 'abc';
+  private type = 'C';
   //FALTA CREAR METODOS PARA REGISTRO, GUARDAR DATA DE USUARIOS Y VALIDAR LOGIN
 
   constructor(private http: HttpClient) {}
@@ -39,6 +40,10 @@ export class AuthService {
 
   get userId(){
     return this.idUser;
+  }
+
+  get userType(){
+    return this.type;
   }
 
   login(){
