@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>clientes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-grid *ngIf="listClientes.length > 0" fixed>
+      <ion-row>
+        <ion-col size="12" size-sm="8" offsetSm="2" class="ion-text-center">
+          <ion-list>
+            <ng-container
+              *ngFor="let cliente of listClientes; let indexArray = index"
+            >
+              <ion-item
+                [routerLink]="['/', 'pruebas', 'clientes', cliente.id]"
+                detail
+              >
+                <ion-label color="primary">
+                  <h1>{{ cliente.id }} Nombre: {{ cliente.name }} {{ cliente.app }} {{ cliente.apm }}</h1>
+                  <h2>Telefono: {{ cliente.number }}</h2>
+                  <p>ID USUARIO: {{ cliente.user}}</p>
+                  <p>ID TARJETA: {{ cliente.card }}</p>
+                </ion-label>
+              </ion-item>
+            </ng-container>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+</ion-content>
