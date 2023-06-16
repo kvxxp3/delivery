@@ -19,17 +19,17 @@ export class AuthPage implements OnInit {
   users: any;
   user: UserData = {
     id: 0,
-    type: '',
+    type: 'C',
     email: '',
     psw: 'string',
-    userId: 'string'
+    userId: ''
   };
   userAux: UserData = {
     id: 0,
-    type: '',
+    type: 'C',
     email: '',
     psw: 'string',
-    userId: 'string'
+    userId: ''
   };
   existeE=false;
   existeU=false;
@@ -44,7 +44,7 @@ export class AuthPage implements OnInit {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
-      userType: new FormControl(this.userAux.type, {
+      type: new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
@@ -124,7 +124,7 @@ export class AuthPage implements OnInit {
           this.form.reset();
           this.presentAlert();
         } 
-        
+
       //si esta para login
       } else {     
         let data = await this.authService.getUserSync(this.userAux.email, this.userAux.psw);
