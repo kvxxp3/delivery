@@ -14,19 +14,22 @@ export class AuthPage implements OnInit {
   form: FormGroup;
   isLoading = false;
   isLogged = false;
+  aprobar: any;
   emailAUX: string = '';
   users: any;
   user: UserData = {
     id: 0,
+    type: 'C',
     email: '',
     psw: 'string',
-    userId: 'string'
+    userId: ''
   };
   userAux: UserData = {
     id: 0,
+    type: 'C',
     email: '',
     psw: 'string',
-    userId: 'string'
+    userId: ''
   };
   existeE=false;
   existeU=false;
@@ -35,9 +38,13 @@ export class AuthPage implements OnInit {
 
   constructor(private authService: AuthService, private router: Router, private loadingCtrl: LoadingController, private alertController: AlertController) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.form = new FormGroup({
       userId: new FormControl(this.userAux.userId, {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      }),
+      type: new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
@@ -50,111 +57,12 @@ export class AuthPage implements OnInit {
         validators: [Validators.required]
       })
     });
-  }
+    this.userAux.email = this.form.value.email;
+    this.userAux.type = this.form.value.type;
+    this.userAux.psw = this.form.value.psw;
+    this.userAux.userId = this.form.value.userId;
 
-  getUserByEmail(email: string) {
-    this.authService.getUserByEmail(email).subscribe(
-      (resp: any) => {
-        this.user = {
-          id: resp[0].id,
-          email: resp[0].email,
-          psw: resp[0].psw,
-          userId: resp[0].userId
-        };
-      }
-    );
-
-    console.log('INFO RECIBIDA');
-    console.log('id: ' + this.user.id);
-    console.log('email: ' + this.user.email);
-    console.log('psw: ' + this.user.psw);
-    console.log('userId: ' + this.user.userId);
-  }
-
-  async loadUsers(event?: InfiniteScrollCustomEvent) {
-    const loading = await this.loadingCtrl.create({
-      message: 'Loading...',
-      spinner: 'bubbles'
-    });
-    await loading.present();
-    this.authService.listUsers().subscribe(
-      (resp) => {
-        loading.dismiss();
-        const listString = JSON.stringify(resp);
-        this.users = JSON.parse(listString);
-        for (let i = 0; i < this.users.length; i++) {
-          console.log('User email ' + i + ': ' + this.users[i].email);
-
-          if (this.users[i].email === this.userAux.email){
-            this.existeE=true;
-            console.log('EL CORREO YA EXISTE');
-          }else{
-            this.existeE=false;
-          }
-          if (this.users[i].userId === this.userAux.userId){
-            this.existeU=true;
-            console.log('EL USUARIO YA EXISTE');
-          }else{
-            this.existeU=false;
-          }
-        }
-        event?.target.complete();
-      },
-      (err) => {
-        console.log(err.message);
-        loading.dismiss();
-      }
-    );
-  }
-
-  onLogin() {
-    if (!this.form.valid) {
-      return;
-    }
-    this.loadingCtrl.create({
-      message: 'Loading...'
-    }).then(loadingEl => {
-      loadingEl.present();
-
-      this.userAux.email = this.form.value.email;
-      this.userAux.psw = this.form.value.psw;
-      this.userAux.userId = this.form.value.userId;
-      console.log('INFO DEL FORM');
-      console.log(this.userAux.email, this.userAux.psw, this.userAux.userId);
-
-      if (this.isLogged) {
-        this.loadUsers();
-        if (this.existeU || this.existeE) {
-          loadingEl.dismiss();
-          this.form.reset();
-          this.presentAlert();
-        } else {
-          console.log('creando nuevo usuario');
-          //manda userId a service
-          this.authService.updateUserId(this.userAux.userId);
-          //peticion post
-          console.log('****** SE VA A MANDAR *********');
-          this.authService.newUser(this.userAux).subscribe(() => {
-            loadingEl.dismiss();
-            this.form.reset();
-            this.router.navigate(['/home/tabs/discover']);
-          });
-        }
-      } else {        
-        this.loadUsers();
-        if(!this.existeU && !this.existeE){
-            console.log("SIIIIIU");
-            loadingEl.dismiss();
-            this.form.reset();
-            this.router.navigate(['/home/tabs/discover']);
-        }else{
-          loadingEl.dismiss();
-          this.form.reset();
-          console.log("NOOOOOO");
-        }        
-      }
-    });
-    
+    await this.login();
   }
 
   onSwitch() {
@@ -173,6 +81,79 @@ export class AuthPage implements OnInit {
       ],
     });
     await alert.present();
+  }
+
+  async login(){
+    if (!this.form.valid) {
+      return;
+    }
+    this.loadingCtrl.create({
+      message: 'Loading...'
+    }).then(async loadingEl => {
+      loadingEl.present();
+
+      this.userAux.email = this.form.value.email;
+      this.userAux.type = this.form.value.type;
+      this.userAux.psw = this.form.value.psw;
+      this.userAux.userId = this.form.value.userId;
+      console.log('INFO DEL FORM');
+      console.log(this.userAux.email, this.form.value.type, this.userAux.psw, this.userAux.userId);
+
+      //si esta para registrarse
+      if (this.isLogged) {
+        let data = await this.authService.postUserSync(this.userAux.userId, this.userAux.psw, this.userAux.email, this.form.value.type);
+        console.log('SE AUTORIZA EL REGISTRO: ' + data);
+
+        if(data == true){ //si las credenciales son correctas
+          //busca el id de usuario
+          let id = await this.authService.getIDSync(this.userAux.email);
+          //guarda el nuevo id en el servicio
+          this.authService.updateUserId(id);
+          //guarda el nuevo tipo en el servicio
+          this.authService.updateUserType(this.form.value.type);
+          //el estado de login cambia a true en el servicio
+          this.authService.login();
+          //termina loading screen
+          loadingEl.dismiss();
+          this.form.reset();
+          this.router.navigate(['/home/tabs/discover']);
+          return;
+
+        }else{ //si las credenciales son incorrectas
+          loadingEl.dismiss();
+          this.form.reset();
+          this.presentAlert();
+        } 
+
+      //si esta para login
+      } else {     
+        let data = await this.authService.getUserSync(this.userAux.email, this.userAux.psw);
+        console.log('SE AUTORIZA EL LOGIN: ' + data);
+
+        if(data == true){ //si las credenciales son correctas
+          //busca el id de usuario
+          let id = await this.authService.getIDSync(this.userAux.email);
+          //guarda el nuevo id en el servicio
+          this.authService.updateUserId(id);
+          //busca el tipo de usuario
+          let tipo = await this.authService.getTypeSync(id);
+          //guarda el nuevo tipo en el servicio
+          this.authService.updateUserType(tipo);
+          //el estado de login cambia a true en el servicio
+          this.authService.login();
+          //termina loading screen
+          loadingEl.dismiss();
+          this.form.reset();
+          this.router.navigate(['/home/tabs/discover']);
+          return;
+
+        }else{ //si las credenciales son incorrectas
+          loadingEl.dismiss();
+          this.form.reset();
+          this.presentAlert();
+        } 
+      }
+    });
   }
   
 }
