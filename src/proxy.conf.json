@@ -1,0 +1,6 @@
+{
+    "/api": {
+    "target": "http://CasaAgs:5000",
+    "secure": false
+    }
+    }
