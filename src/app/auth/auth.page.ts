@@ -22,14 +22,14 @@ export class AuthPage implements OnInit {
     type: 'C',
     email: '',
     psw: 'string',
-    userId: ''
+    userId: 'A'
   };
   userAux: UserData = {
     id: 0,
     type: 'C',
     email: '',
     psw: 'string',
-    userId: ''
+    userId: 'A'
   };
   existeE=false;
   existeU=false;
@@ -44,7 +44,7 @@ export class AuthPage implements OnInit {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
-      type: new FormControl(null, {
+      type: new FormControl(this.userAux.type, {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
