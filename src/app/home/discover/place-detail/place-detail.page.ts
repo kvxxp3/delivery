@@ -162,27 +162,6 @@ export class PlaceDetailPage implements OnDestroy {
             message: 'Booking place...'
           }).then(loadingEl => {
             loadingEl.present();
-            /*
-            var numero = this.getIDfromURL();
-            this.getPlaceById(numero);
-
-            this.newPlace.id = Math.random().toString();
-            this.newPlace.placeId = this.place.id.toString();
-            this.newPlace.userId = this.authService.userId;
-            this.newPlace.placeTitle = this.place.title;
-            this.newPlace.placeImg = this.place.imageURL;
-            this.newPlace.firstName = 'Paola';
-            this.newPlace.lastName = 'Alba';
-            this.newPlace.guestNumber = this.datePipe.transform(this.form.value.dateFrom,'yyyy-MM-dd');
-            this.newPlace.bookedFrom = this.datePipe.transform(this.form.value.dateTo,'yyyy-MM-dd');
-            this.newPlace.bookedTo = this.form.value.location;
-            
-            this.placesService.newPlace(this.newPlace).subscribe(() => {
-              loadingEl.dismiss();
-              this.form.reset();
-              this.router.navigate(['/home/tabs/offers']);
-            });
-            */
             
             const data = resultData.data.bookingData;
             this.bookingService.addBooking(

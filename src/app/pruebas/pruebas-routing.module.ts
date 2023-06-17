@@ -14,8 +14,17 @@ const routes: Routes = [
   },
   {
     path: 'pedido',
-    loadChildren: () => import('./pedido/pedido.module').then( m => m.PedidoPageModule)
-  }
+    children: [
+      {
+        path: ':productId',
+        loadChildren: () => import('./pedido/producto/producto.module').then( m=>m.ProductoPageModule)
+      }
+    ]
+    },
+    // {
+    //   path: ':restaurantId',
+    //   loadChildren: () => import('./pedido/pedido.module').then( m=>m.PedidoPageModule)
+    // }
 ];
 
 @NgModule({
