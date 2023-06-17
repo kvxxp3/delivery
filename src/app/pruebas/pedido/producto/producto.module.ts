@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PedidoPageRoutingModule } from './pedido-routing.module';
+import { ProductoPageRoutingModule } from './producto-routing.module';
 
-import { PedidoPage } from './pedido.page';
+import { ProductoPage } from './producto.page';
 
 @NgModule({
   imports: [
@@ -14,8 +14,8 @@ import { PedidoPage } from './pedido.page';
     ReactiveFormsModule,
     FormsModule,
     IonicModule,
-    PedidoPageRoutingModule
+    ProductoPageRoutingModule
   ],
-  declarations: [PedidoPage]
+  declarations: [ProductoPage]
 })
-export class PedidoPageModule {}
+export class ProductoPageModule {}

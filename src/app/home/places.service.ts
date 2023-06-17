@@ -97,23 +97,4 @@ export class PlacesService {
     })
     );
   }
-
-  // updatePlace(placeId: string, title: string, description: string) {
-  //   return this.placess.pipe(take(1), delay(1000), tap(places => {
-  //     const updatedIndex = places.findIndex(p => p.id === placeId);
-  //     const updatedPlace = [...places];
-  //     const old = updatedPlace[updatedIndex];
-  //     updatedPlace[updatedIndex] = new Place(
-  //       old.id,
-  //       title,
-  //       description,
-  //       old.imageURL,
-  //       old.price,
-  //       old.availableFrom,
-  //       old.availableTo,
-  //       old.userId
-  //       );
-  //       this.placess.next(updatedPlace);
-  //   }));
-  // }
 }
