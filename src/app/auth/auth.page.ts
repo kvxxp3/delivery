@@ -17,6 +17,7 @@ export class AuthPage implements OnInit {
   aprobar: any;
   emailAUX: string = '';
   users: any;
+  typeAUX: string = '';
   user: UserData = {
     id: 0,
     type: '',
@@ -56,7 +57,7 @@ export class AuthPage implements OnInit {
       })
     });
     this.userAux.email = this.form.value.email;
-    this.userAux.type = this.form.value.type;
+    this.userAux.type = this.typeAUX;
     this.userAux.psw = this.form.value.psw;
     this.userAux.userId = this.form.value.userId;
 
@@ -91,15 +92,15 @@ export class AuthPage implements OnInit {
       loadingEl.present();
 
       this.userAux.email = this.form.value.email;
-      this.userAux.type = this.form.value.type;
+      this.userAux.type = this.typeAUX;
       this.userAux.psw = this.form.value.psw;
       this.userAux.userId = this.form.value.userId;
       console.log('INFO DEL FORM');
-      console.log(this.userAux.email, this.form.value.type, this.userAux.psw, this.userAux.userId);
+      console.log(this.userAux.email, this.userAux.type, this.userAux.psw, this.userAux.userId);
 
       //si esta para registrarse
       if (this.isLogged) {
-        let data = await this.authService.postUserSync(this.userAux.userId, this.userAux.psw, this.userAux.email, this.form.value.type);
+        let data = await this.authService.postUserSync(this.userAux.userId, this.userAux.psw, this.userAux.email, this.userAux.type);
         console.log('SE AUTORIZA EL REGISTRO: ' + data);
 
         if(data == true){ //si las credenciales son correctas
@@ -108,7 +109,7 @@ export class AuthPage implements OnInit {
           //guarda el nuevo id en el servicio
           this.authService.updateUserId(id);
           //guarda el nuevo tipo en el servicio
-          this.authService.updateUserType(this.form.value.type);
+          this.authService.updateUserType(this.userAux.type);
           //el estado de login cambia a true en el servicio
           this.authService.login();
           //termina loading screen
@@ -152,6 +153,12 @@ export class AuthPage implements OnInit {
         } 
       }
     });
+  }
+
+  //Listener del evento del ion-radio-group para obtener el valor del ion-radio seleccionado
+  selectedValue($event){
+    console.log($event.target.value);
+    this.typeAUX = $event.target.value;
   }
   
 }
