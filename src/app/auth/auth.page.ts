@@ -19,14 +19,14 @@ export class AuthPage implements OnInit {
   users: any;
   user: UserData = {
     id: 0,
-    type: 'C',
+    type: '',
     email: '',
     psw: 'string',
     userId: ''
   };
   userAux: UserData = {
     id: 0,
-    type: 'C',
+    type: '',
     email: '',
     psw: 'string',
     userId: ''
@@ -41,12 +41,10 @@ export class AuthPage implements OnInit {
   async ngOnInit() {
     this.form = new FormGroup({
       userId: new FormControl(this.userAux.userId, {
-        updateOn: 'blur',
-        validators: [Validators.required]
+        updateOn: 'blur'
       }),
-      type: new FormControl(null, {
-        updateOn: 'blur',
-        validators: [Validators.required]
+      type: new FormControl(this.userAux.type, {
+        updateOn: 'blur'
       }),
       email: new FormControl(null, {
         updateOn: 'blur',
