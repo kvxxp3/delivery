@@ -53,7 +53,7 @@ export class ProductoPage implements OnInit {
     console.log('el numero en el url es: '+id);
     return id;
   }
-
+  //
   getProductById(product: number){
     this.productoService.getProductByID(product).subscribe(
       (resp: any) => {
