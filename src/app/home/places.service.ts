@@ -9,6 +9,9 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { PlacesData } from '../interfaces/places-data';
 import { PlaceData } from '../interfaces/place-data';
+import { Restaurantes } from '../interfaces/restaurantes';
+import { Producto } from '../interfaces/producto';
+import { Productos } from '../pruebas/pedido/producto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +52,32 @@ export class PlacesService {
   ]);
 
   constructor(private authService: AuthService, private http: HttpClient) { }
+
+  //toma todos los productos por el id del restaurante
+  getProductsByID(id: number): Observable<Producto>{
+    return this.http.get<Producto>(`${environment.apiURL}/productos/restaurante/${id}`);
+  }
+
+  //toma un producto por su id
+  getProductByID(id: number): Observable<Producto>{
+    return this.http.get<Producto>(`${environment.apiURL}/productos/${id}`);
+  }
+
+  ////////////////////////////////////////////////
+
+  addProduct(name: string, desc: string, price: string, rest: number, foto: string): Observable<any>{
+    return this.http.post<any>(`${environment.apiURL}/producto/add`, {nombre: {name}, des: {desc}, precio: {price}, res: {rest}, imagen: {foto}});
+  }
+
+  deleteProduct(id: number): Observable<Productos>{
+    return this.http.delete<Productos>(`${environment.apiURL}/producto/delete/${id}`);
+  }
+
+  updateProduct(id: number, name: string, desc: string, price: string, foto: string): Observable<any>{
+    return this.http.put<any>(`${environment.apiURL}/producto/update/${id}`, {nombre: {name}, des: {desc}, precio: {price}, imagen: {foto}});
+  }
+
+  ////////////////////////////////////////////////
 
   //PAST PROJECT
   get places() {
