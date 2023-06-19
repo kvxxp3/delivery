@@ -136,20 +136,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "HomePage": () => (/* binding */ HomePage)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4929);
 /* harmony import */ var _home_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./home.page.html?ngResource */ 3853);
 /* harmony import */ var _home_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./home.page.scss?ngResource */ 1020);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _auth_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../auth/auth.service */ 384);
+
 
 
 
 
 let HomePage = class HomePage {
-    constructor() { }
+    constructor(authService) {
+        this.authService = authService;
+        this.tipo = this.authService.userType;
+    }
 };
-HomePage.ctorParameters = () => [];
-HomePage = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
+HomePage.ctorParameters = () => [
+    { type: _auth_auth_service__WEBPACK_IMPORTED_MODULE_2__.AuthService }
+];
+HomePage = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
         selector: 'app-home',
         template: _home_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_home_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
@@ -176,7 +183,7 @@ module.exports = "#container {\n  text-align: center;\n  position: absolute;\n  
   \************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-tabs>\n  <ion-tab-bar slot=\"bottom\">\n    <ion-tab-button tab=\"discover\">\n      <ion-icon name=\"search\"></ion-icon>\n      <ion-label>Discover</ion-label>\n    </ion-tab-button>\n    <ion-tab-button tab=\"offers\">\n      <ion-icon name=\"card\"></ion-icon>\n      <ion-label>Offers</ion-label>\n    </ion-tab-button>\n  </ion-tab-bar>\n</ion-tabs>\n";
+module.exports = "<ion-tabs>\n  <ion-tab-bar slot=\"bottom\">\n    <ion-tab-button tab=\"discover\">\n      <ion-icon name=\"search\"></ion-icon>\n      <ion-label>Discover</ion-label>\n    </ion-tab-button>\n    <ion-tab-button *ngIf=\"tipo == 'R'\" tab=\"offers\">\n      <ion-icon name=\"fast-food-outline\"></ion-icon>\n      <ion-label>Food</ion-label>\n    </ion-tab-button>\n    <ion-tab-button *ngIf=\"tipo == 'R'\" tab=\"offers\">\n      <ion-icon name=\"receipt-outline\"></ion-icon>\n      <ion-label>Manage</ion-label>\n    </ion-tab-button>\n    <ion-tab-button *ngIf=\"tipo == 'R'\" tab=\"offers\" routerLink=\"/\">\n      <ion-icon name=\"person-circle-outline\"></ion-icon>\n      <ion-label>Account</ion-label>\n    </ion-tab-button>\n    <ion-tab-button *ngIf=\"tipo == 'C'\" tab=\"offers\" routerLink=\"/\">\n      <ion-icon name=\"person-circle-outline\"></ion-icon>\n      <ion-label>Account</ion-label>\n    </ion-tab-button>\n  </ion-tab-bar>\n</ion-tabs>\n";
 
 /***/ })
 

@@ -166,70 +166,32 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let OffersPage = class OffersPage {
-  constructor(placesService, router, loadingController, authService, alertController) {
+  constructor(placesService, router, authService, alertController) {
     this.placesService = placesService;
     this.router = router;
-    this.loadingController = loadingController;
     this.authService = authService;
     this.alertController = alertController;
-  }
-
-  ngOnInit() {
-    this.placesSub = this.placesService.places.subscribe(places => {
-      this.sub = places;
-    });
+    this.products = [];
   }
 
   ionViewWillEnter() {
-    this.loadPlaces();
+    let id = parseInt(this.authService.userId);
+    this.getProductsById(id);
   }
 
-  loadPlaces(event) {
-    var _this = this;
+  getProductsById(restaurant) {
+    //convertir datos json del servidor a string
+    this.placesService.getProductsByID(restaurant).subscribe(resp => {
+      const listString = JSON.stringify(resp); //lista todos los productos
 
-    return (0,_home_karla_Documentos_booking_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      const loading = yield _this.loadingController.create({
-        message: 'Loading...',
-        spinner: 'bubbles'
-      });
-      yield loading.present(); //convertir data json recibido del servidor a string
+      this.products = JSON.parse(listString);
+    }, err => {
+      console.log(err.message);
+    });
+  }
 
-      _this.placesService.listPlaces().subscribe(resp => {
-        loading.dismiss();
-        const listString = JSON.stringify(resp);
-        _this.offers = JSON.parse(listString);
-        console.log('userId: ' + _this.authService.userId); //muestra solo los lugares que registro el usuario
-
-        for (let i = 0; i < _this.offers.length; i++) {
-          console.log('JSON Places ' + i + ': ' + _this.offers[i].title);
-          let j = i;
-
-          if (_this.offers[i].userId !== _this.authService.userId) {
-            if (i === 0) {
-              j = 1;
-            }
-
-            console.log('entro a filtro ' + _this.offers[i].title);
-
-            _this.offers.splice(i, j);
-
-            if (i !== 0) {
-              i--;
-            }
-          }
-        } //GUARDADOS
-
-
-        for (let i = 0; i < _this.offers.length; i++) {
-          console.log('GUARDADOS\nJSON Places ' + i + ': ' + _this.offers[i].title);
-        }
-
-        event?.target.complete();
-      }, err => {
-        console.log(err.message);
-        loading.dismiss();
-      });
-    })();
+  onClickItem(i) {
+    this.router.navigate(['/pruebas/pedido/' + i]);
   }
 
   onEdit(offerId, slidingItem) {
@@ -243,16 +205,30 @@ let OffersPage = class OffersPage {
     console.log('[SUCCESS] deleting item', offerId); //convert to number
 
     const id = +offerId;
-    this.placesService.deletePlace(id).subscribe();
-    this.ionViewWillEnter(); //this.router.navigateByUrl('/home/tabs/offers');
-    //this.router.navigate(['/', 'home', 'tabs', 'offers']);
+    this.placesService.deleteProduct(id).subscribe();
+    this.ionViewWillEnter();
+    this.reload();
+  }
+
+  reload() {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+
+    this.someSubscription = this.router.events.subscribe(event => {
+      if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_5__.NavigationEnd) {
+        // Here is the dashing line comes in the picture.
+        // You need to tell the router that, you didn't visit or load the page previously, so mark the navigated flag to false as below.
+        this.router.navigated = false;
+      }
+    });
   }
 
   presentAlert(offerId, slidingItem) {
-    var _this2 = this;
+    var _this = this;
 
     return (0,_home_karla_Documentos_booking_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      const alert = yield _this2.alertController.create({
+      const alert = yield _this.alertController.create({
         header: 'Are you sure you want to delete this offer?',
         buttons: [{
           text: 'Cancel',
@@ -269,14 +245,14 @@ let OffersPage = class OffersPage {
       console.log('ROLE: ' + role);
 
       if (role === 'confirm') {
-        _this2.onDelete(offerId, slidingItem);
+        _this.onDelete(offerId, slidingItem);
       }
     })();
   }
 
   ngOnDestroy() {
-    if (this.placesSub) {
-      this.placesSub.unsubscribe();
+    if (this.someSubscription) {
+      this.someSubscription.unsubscribe();
     }
   }
 
@@ -286,8 +262,6 @@ OffersPage.ctorParameters = () => [{
   type: _places_service__WEBPACK_IMPORTED_MODULE_4__.PlacesService
 }, {
   type: _angular_router__WEBPACK_IMPORTED_MODULE_5__.Router
-}, {
-  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.LoadingController
 }, {
   type: src_app_auth_auth_service__WEBPACK_IMPORTED_MODULE_3__.AuthService
 }, {
@@ -329,7 +303,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \*****************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-item [routerLink]=\"['/', 'home', 'tabs', 'offers', offer.id]\">\n  <ion-thumbnail slot=\"start\">\n    <img [src]=\"offer.imageURL\" />\n  </ion-thumbnail>\n  <ion-label>\n    <h1>{{ offer.title }}</h1>\n    <div class=\"offerDetails\">\n      <ion-icon slot=\"start\" name=\"calendar\" color=\"primary\"></ion-icon>\n      <ion-text color=\"secondary\" class=\"space-left\">\n        {{ offer.availableFrom| date }}\n      </ion-text>\n      <span class=\"space-left\">to</span>\n      <ion-icon slot=\"start\" name=\"calendar\" class=\"space-left\" color=\"primary\"></ion-icon>\n      <ion-text color=\"secondary\" class=\"space-left\">\n        {{ offer.availableTo| date }}\n      </ion-text>\n    </div>\n  </ion-label>\n</ion-item>\n";
+module.exports = "<ion-item [routerLink]=\"['/', 'home', 'tabs', 'offers', offer.id]\">\n  <ion-thumbnail slot=\"start\">\n    <img [src]=\"offer.foto\" />\n  </ion-thumbnail>\n  <ion-label>\n    <h1>{{ offer.nombre }}</h1>\n    <div class=\"offerDetails\">\n      <!--<ion-icon slot=\"start\" name=\"calendar\" color=\"primary\"></ion-icon>-->\n      <ion-text color=\"danger\" class=\"space-left\">\n        ${{ offer.precio}}\n      </ion-text>\n      <span class=\"space-left\"></span>\n      <ion-icon slot=\"start\" name=\"chatbox-ellipses-outline\" class=\"space-left\" color=\"primary\"></ion-icon>\n      <ion-text color=\"secondary\" class=\"space-left\" style=\"width: 35%\">\n        {{ offer.des }}\n      </ion-text>\n      \n    </div>\n  </ion-label>\n</ion-item>\n";
 
 /***/ }),
 
@@ -339,7 +313,7 @@ module.exports = "<ion-item [routerLink]=\"['/', 'home', 'tabs', 'offers', offer
   \*********************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button menu=\"menu-content\"></ion-menu-button>\n    </ion-buttons>\n    <ion-title>My Offers</ion-title>\n    <ion-buttons slot=\"primary\">\n      <ion-button routerLink=\"/home/tabs/offers/new\">\n        <ion-icon name=\"add\" slot=\"icon-only\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid fixed>\n    <ion-row>\n      <ion-col size=\"12\" size-sm=\"8\" offsetSm=\"2\">\n        <ion-list>\n          <ion-item-sliding *ngFor=\"let offer of offers\" #slidingItem>\n            <app-offer-item [offer]=\"offer\"></app-offer-item>\n            <ion-item-options side=\"start\">\n              <ion-item-option color=\"primary\" (click)=\"onEdit(offer.id, slidingItem)\">\n                <ion-icon slot=\"icon-only\" name=\"create\"></ion-icon>\n              </ion-item-option>\n            </ion-item-options>\n            <ion-item-options side=\"end\">\n              <ion-item-option color=\"secondary\" (click)=\"presentAlert(offer.id, slidingItem)\">\n                <ion-icon slot=\"icon-only\" name=\"trash-outline\"></ion-icon>\n              </ion-item-option>\n            </ion-item-options>\n          </ion-item-sliding>\n        </ion-list>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n";
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button menu=\"menu-content\"></ion-menu-button>\n    </ion-buttons>\n    <ion-title>My Products</ion-title>\n    <ion-buttons slot=\"primary\">\n      <ion-button routerLink=\"/home/tabs/offers/new\">\n        <ion-icon name=\"add\" slot=\"icon-only\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid fixed>\n    <ion-row>\n      <ion-col size=\"12\" size-sm=\"8\" offsetSm=\"2\">\n        <ion-list>\n          <ion-item-sliding *ngFor=\"let offer of products\" #slidingItem>\n            <app-offer-item [offer]=\"offer\"></app-offer-item>\n            <ion-item-options side=\"start\">\n              <ion-item-option color=\"primary\" (click)=\"onEdit(offer.id, slidingItem)\">\n                <ion-icon slot=\"icon-only\" name=\"create\"></ion-icon>\n              </ion-item-option>\n            </ion-item-options>\n            <ion-item-options side=\"end\">\n              <ion-item-option color=\"secondary\" (click)=\"presentAlert(offer.id, slidingItem)\">\n                <ion-icon slot=\"icon-only\" name=\"trash-outline\"></ion-icon>\n              </ion-item-option>\n            </ion-item-options>\n          </ion-item-sliding>\n        </ion-list>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n";
 
 /***/ })
 

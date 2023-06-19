@@ -113,19 +113,34 @@ let EditOfferPage = class EditOfferPage {
         this.navCtrl = navCtrl;
         this.router = router;
         this.loadingController = loadingController;
-        this.placeID = {
+        this.product = {
             id: 0,
-            title: 'place',
-            description: 'string',
-            imageURL: 'string',
-            price: 0,
-            availableFrom: 'string',
-            availableTo: 'string',
-            userId: 'string'
+            nombre: 'product',
+            des: 'string',
+            precio: 'string',
+            restaurante: 'string',
+            foto: 'string'
         };
     }
     ionViewWillEnter() {
-        // this.getPlaceById(this.getIDfromURL());
+        //this.getProductById(this.getIDfromURL());
+    }
+    ngOnInit() {
+        // this.route.paramMap.subscribe(paramMap => {
+        //   this.productSub = this.placesService.getPlace(paramMap.get('placeId')).subscribe(place => {
+        //     this.place = place;
+        //     this.form = new FormGroup({
+        //       title: new FormControl(this.place.title, {
+        //         updateOn: 'blur',
+        //         validators: [Validators.required]
+        //       }),
+        //       description: new FormControl(this.place.description, {
+        //         updateOn: 'blur',
+        //         validators: [Validators.required, Validators.maxLength(180)]
+        //       })
+        //     });
+        //   });
+        // });
         // this.form = new FormGroup({
         //   title: new FormControl(this.placeID.title, {
         //     updateOn: 'blur',
@@ -136,41 +151,27 @@ let EditOfferPage = class EditOfferPage {
         //     validators: [Validators.required, Validators.maxLength(180)]
         //   })
         // });
-        this.getPlaceById(this.getIDfromURL());
-    }
-    ngOnInit() {
-        this.route.paramMap.subscribe(paramMap => {
-            // if (!paramMap.has('placeId')) {
-            //   this.navCtrl.navigateBack('/home/tabs/offers');
-            //   return;
-            // }
-            this.placeSub = this.placesService.getPlace(paramMap.get('placeId')).subscribe(place => {
-                this.place = place;
-                this.form = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormGroup({
-                    title: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl(this.place.title, {
-                        updateOn: 'blur',
-                        validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.required]
-                    }),
-                    description: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl(this.place.description, {
-                        updateOn: 'blur',
-                        validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.maxLength(180)]
-                    })
-                });
-            });
-        });
         this.form = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormGroup({
-            title: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl(this.placeID.title, {
+            title: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl(null, {
                 updateOn: 'blur',
-                validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.required]
+                validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.maxLength(45)]
             }),
-            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl(this.placeID.description, {
+            image: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl(null, {
                 updateOn: 'blur',
-                validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.maxLength(180)]
+                validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.maxLength(250)]
+            }),
+            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl(null, {
+                updateOn: 'blur',
+                validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.maxLength(45)]
+            }),
+            price: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl(null, {
+                updateOn: 'blur',
+                validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.min(1)]
             })
         });
-        this.getPlaceById(this.getIDfromURL());
+        //this.getProductById(this.getIDfromURL());
+        this.obtenerDatos();
     }
-    //NEW
     getIDfromURL() {
         const url = this.router.url;
         const arr = url.split('/', 6);
@@ -178,31 +179,43 @@ let EditOfferPage = class EditOfferPage {
         console.log('el numero en el url es: ' + id);
         return id;
     }
-    getPlaceById(place) {
-        this.placesService.getPlaceById(place).subscribe((resp) => {
-            this.placeID = {
-                id: resp[0].id,
-                title: resp[0].title,
-                description: resp[0].description,
-                imageURL: resp[0].imageURL,
-                price: resp[0].price,
-                availableFrom: resp[0].availableFrom,
-                availableTo: resp[0].availableTo,
-                userId: resp[0].userId
-            };
+    getProductById(product) {
+        this.placesService.getProductByID(product).subscribe((resp) => {
+            console.log(resp);
+            /*this.product = {
+              id: resp.id,
+              nombre: resp.nombre,
+              des: resp.des,
+              precio: resp.precio,
+              restaurante: resp.restaurante,
+              foto: resp.foto
+            };*/
+            this.product.id = resp.id;
+            this.product.nombre = resp.nombre;
+            this.product.des = resp.des;
+            this.product.precio = resp.precio;
+            this.product.restaurante = resp.restaurante;
+            this.product.foto = resp.foto;
+            /*
+            this.form.value.title = this.product.nombre;
+            this.form.value.description = this.product.des;
+            this.form.value.price = this.product.precio;
+            this.form.value.image = this.product.foto;*/
+            console.log('INFO RECIBIDA:');
+            console.log('product id: ' + this.product.id);
+            console.log('product title: ' + this.product.nombre);
+            console.log('product desc: ' + this.product.des);
+            console.log('product img: ' + this.product.precio);
+            console.log('product restaurant: ' + this.product.restaurante);
+            console.log('product price: ' + this.product.foto);
         });
-        console.log('TO BE EDITED:');
-        console.log('place id: ' + this.placeID.id);
-        console.log('place id: ' + this.placeID.title);
-        console.log('place id: ' + this.placeID.description);
     }
-    updatePlace() {
-        console.log('TO BE SEND:');
-        console.log('place id: ' + this.placeID.id);
-        console.log('place title: ' + this.placeID.title);
-        console.log('place desc: ' + this.placeID.description);
-        console.log('place img: ' + this.placeID.imageURL);
-        console.log('place price: ' + this.placeID.price);
+    updateProduct() {
+        console.log('TO BE SENT:');
+        console.log('product title: ' + this.product.nombre);
+        console.log('product desc: ' + this.product.des);
+        console.log('product price: ' + this.product.precio);
+        console.log('product image: ' + this.product.foto);
         if (!this.form.valid) {
             return;
         }
@@ -210,7 +223,7 @@ let EditOfferPage = class EditOfferPage {
             message: 'Updating place...'
         }).then(loadingEl => {
             loadingEl.present();
-            this.placesService.updatePlace(this.placeID)
+            this.placesService.updateProduct(Number(this.product.id), this.product.nombre, this.product.des, this.product.precio, this.product.foto)
                 .subscribe(() => {
                 loadingEl.dismiss();
                 this.form.reset();
@@ -218,10 +231,8 @@ let EditOfferPage = class EditOfferPage {
             });
         });
     }
-    ngOnDestroy() {
-        if (this.placeSub) {
-            this.placeSub.unsubscribe();
-        }
+    obtenerDatos() {
+        this.getProductById(this.getIDfromURL());
     }
 };
 EditOfferPage.ctorParameters = () => [
@@ -336,9 +347,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _place_bookings_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./place-bookings.page.html?ngResource */ 6221);
 /* harmony import */ var _place_bookings_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./place-bookings.page.scss?ngResource */ 1374);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 2560);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 124);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ 3819);
 /* harmony import */ var _places_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../places.service */ 546);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 124);
 
 
 
@@ -347,10 +358,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let PlaceBookingsPage = class PlaceBookingsPage {
-    constructor(route, navCtrl, placesService) {
+    constructor(route, router, navCtrl, placesService) {
         this.route = route;
+        this.router = router;
         this.navCtrl = navCtrl;
         this.placesService = placesService;
+        this.product = {
+            nombre: 'product',
+            des: 'string',
+            precio: 'string',
+            res: 0,
+            imagen: 'string'
+        };
     }
     ngOnInit() {
         this.route.paramMap.subscribe(paramMap => {
@@ -362,6 +381,36 @@ let PlaceBookingsPage = class PlaceBookingsPage {
                 this.place = place;
             });
         });
+        this.getProductById(this.getIDfromURL());
+    }
+    getIDfromURL() {
+        const url = this.router.url;
+        const arr = url.split('/', 5);
+        const id = parseInt(arr[4], 10);
+        console.log('el numero en el url es: ' + id);
+        this.idOffer = id;
+        return id;
+    }
+    getProductById(product) {
+        this.placesService.getProductByID(product).subscribe((resp) => {
+            console.log(resp);
+            console.log(resp.nombre);
+            this.product = {
+                nombre: resp.nombre,
+                des: resp.des,
+                precio: resp.precio,
+                res: resp.res,
+                imagen: resp.imagen
+            };
+            this.productName = resp.nombre;
+        });
+    }
+    destroyProduct() {
+        this.placesService.deleteProduct(this.idOffer).subscribe((resp) => {
+            console.log(resp);
+            console.log("Producto " + this.idOffer + " eliminado");
+        });
+        this.router.navigateByUrl('/home/tabs/offers');
     }
     ngOnDestroy() {
         if (this.placeSub) {
@@ -371,6 +420,7 @@ let PlaceBookingsPage = class PlaceBookingsPage {
 };
 PlaceBookingsPage.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__.ActivatedRoute },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__.Router },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.NavController },
     { type: _places_service__WEBPACK_IMPORTED_MODULE_2__.PlacesService }
 ];
@@ -1617,7 +1667,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \********************************************************************************/
 /***/ ((module) => {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJwbGFjZS1ib29raW5ncy5wYWdlLnNjc3MifQ== */";
+module.exports = "ion-img {\n  width: 40%;\n  height: 40%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInBsYWNlLWJvb2tpbmdzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLFVBQUE7RUFDQSxXQUFBO0FBQ0oiLCJmaWxlIjoicGxhY2UtYm9va2luZ3MucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW9uLWltZyB7XG4gICAgd2lkdGg6IDQwJTtcbiAgICBoZWlnaHQ6NDAlO1xufSJdfQ== */";
 
 /***/ }),
 
@@ -1627,7 +1677,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button [defaultHref]=\"'/home/tabs/offers/'+place.id\"></ion-back-button>\n    </ion-buttons>\n    <ion-title>Edit Offer</ion-title>\n    <ion-buttons slot=\"primary\">\n      <ion-button (click)=\"updatePlace()\" [disabled]=\"!form.valid\">\n        <ion-icon slot=\"icon-only\" name=\"checkmark\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <form [formGroup]=\"form\">\n    <ion-grid fixed>\n      <ion-row>\n        <ion-col size-sm=\"6\" offsetSm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Title</ion-label>\n            <ion-input type=\"text\" [(ngModel)]=\"placeID.title\" autocomplete autocorrect formControlName=\"title\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row>\n        <ion-col size-sm=\"6\" offset-sm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Short Description</ion-label>\n            <ion-textarea rows=\"3\" [(ngModel)]=\"placeID.description\" formControlName=\"description\"></ion-textarea>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row *ngIf=\"!form.get('description').valid && form.get('description').touched\">\n        <ion-col size-sm=\"6\" offset-sm=\"3\">\n          <p>Descriptions must be between 1 and 180 characters.</p>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </form>\n</ion-content>\n";
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button [defaultHref]=\"'/home/tabs/offers/'+product.restaurante\"></ion-back-button>\n    </ion-buttons>\n    <ion-title>Edit Product</ion-title>\n    <ion-buttons slot=\"primary\">\n      <ion-button (click)=\"updateProduct()\" [disabled]=\"!form.valid\">\n        <ion-icon slot=\"icon-only\" name=\"checkmark\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <!--<ion-button color=\"danger\" (click)=\"obtenerDatos()\">Obtain Data</ion-button>-->\n  <form [formGroup]=\"form\">\n    <ion-grid fixed>\n      <ion-row>\n        <ion-col size-sm=\"6\" offsetSm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Product name</ion-label>\n            <ion-input type=\"text\" [(ngModel)]=\"product.nombre\" autocomplete autocorrect formControlName=\"title\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row>\n        <ion-col size-sm=\"6\" offsetSm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Price</ion-label>\n            <ion-input type=\"number\" [(ngModel)]=\"product.precio\" autocomplete autocorrect formControlName=\"price\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row>\n        <ion-col size-sm=\"6\" offsetSm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Image</ion-label>\n            <ion-input type=\"text\" [(ngModel)]=\"product.foto\" autocomplete autocorrect formControlName=\"image\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row>\n        <ion-col size-sm=\"6\" offset-sm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Short Description</ion-label>\n            <ion-textarea rows=\"3\" [(ngModel)]=\"product.des\" formControlName=\"description\"></ion-textarea>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row *ngIf=\"!form.get('description').valid && form.get('description').touched\">\n        <ion-col size-sm=\"6\" offset-sm=\"3\">\n          <p>Descriptions must be between 1 and 45 characters.</p>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </form>\n</ion-content>\n";
 
 /***/ }),
 
@@ -1637,7 +1687,7 @@ module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\"
   \********************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button defaultHref=\"/home/tabs/offers\"></ion-back-button>\n    </ion-buttons>\n    <ion-title>{{ place.title }}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-button expand=\"block\" fill=\"clear\" shape=\"round\" color=\"primary\"\n    [routerLink]=\"['/', 'home', 'tabs', 'offers', 'edit', place.id]\">\n    Edit\n  </ion-button>\n</ion-content>\n";
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button defaultHref=\"/home/tabs/offers\"></ion-back-button>\n    </ion-buttons>\n    <ion-title>{{ productName }}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-text-center\">\n  <ion-grid class=\"ion-no-padding\">\n    <ion-row>\n      <ion-col sizeSm=\"6\" offsetSm=\"3\">\n        <ion-img [src]=\"product.foto\"></ion-img>\n      </ion-col>\n    </ion-row>\n\n    <ion-row>\n      <ion-col sizeSm=\"6\" offsetSm=\"3\">\n        <p style=\"font-weight: bold;\">Description:</p>\n        <p>{{ product.des }}</p>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-row>\n    <ion-col sizeSm=\"6\" offsetSm=\"3\" text-center>\n      <p style=\"font-weight: bold;\">Price per unit:</p>\n      <p>{{ product.precio }}</p>\n    </ion-col>\n  </ion-row>\n</ion-content>\n\n<ion-content>\n  <ion-button expand=\"block\" fill=\"clear\" shape=\"round\" color=\"primary\"\n    [routerLink]=\"['/', 'home', 'tabs', 'offers', 'edit', idOffer]\">\n    Edit\n  </ion-button>\n  <ion-button expand=\"block\" fill=\"clear\" shape=\"round\" color=\"primary\" (click)=\"destroyProduct()\">\n    Delete\n  </ion-button>\n</ion-content>\n";
 
 /***/ })
 

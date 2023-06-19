@@ -11,14 +11,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "BookingService": () => (/* binding */ BookingService)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 2560);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ 4505);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ 3910);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ 5843);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ 8759);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ 4505);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ 3910);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ 5843);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ 8759);
 /* harmony import */ var _auth_auth_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../auth/auth.service */ 384);
-/* harmony import */ var _create_booking_booking_model__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./create-booking/booking.model */ 6851);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common/http */ 8987);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/environments/environment */ 2340);
+/* harmony import */ var _create_booking_booking_model__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./create-booking/booking.model */ 6851);
+
+
 
 
 
@@ -26,30 +30,80 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let BookingService = class BookingService {
-    constructor(authService) {
+    constructor(authService, http) {
         this.authService = authService;
-        this.booking = new rxjs__WEBPACK_IMPORTED_MODULE_2__.BehaviorSubject([]);
+        this.http = http;
+        this.bookingss = new rxjs__WEBPACK_IMPORTED_MODULE_3__.BehaviorSubject([]);
     }
     get bookings() {
-        return this.booking.asObservable();
+        return this.bookingss.asObservable();
+    }
+    /*
+    addBooking(
+      placeId: string,
+      placeTitle: string,
+      placeImg: string,
+      firstName: string,
+      lastName: string,
+      guestNumber: number,
+      dateFrom: Date,
+      dateTo: Date
+    ) {
+      const newBooking = new Booking(
+        Math.random().toString(),
+        placeId,
+        this.authService.userId,
+        placeTitle,
+        placeImg,
+        firstName,
+        lastName,
+        guestNumber,
+        dateFrom,
+        dateTo,
+        location
+      );
+      return this.bookings.pipe(take(1), delay(1000), tap(bookings => {
+        this.booking.next(bookings.concat(newBooking));
+      })
+      );
+    }
+  
+    cancelBooking(bookingId: string) {
+      return this.bookings.pipe(take(1), delay(1000), tap(bookings => {
+        this.booking.next(bookings.filter(b => b.id !== bookingId));
+      })
+      );
+     }
+     */
+    //NEW
+    listBookings() {
+        return this.http.get(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.apiURL}/bookings`);
+    }
+    getBookingById(id) {
+        return this.http.get(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.apiURL}/bookings/?id=${id}`);
+    }
+    newBooking(newPlace) {
+        return this.http.post(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.apiURL}/bookings`, newPlace);
+    }
+    updateBooking(booking) {
+        return this.http.put(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.apiURL}/bookings/${booking.id}`, booking);
+    }
+    deleteBooking(id) {
+        return this.http.delete(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.apiURL}/bookings/${id}`);
     }
     addBooking(placeId, placeTitle, placeImg, firstName, lastName, guestNumber, dateFrom, dateTo) {
-        const newBooking = new _create_booking_booking_model__WEBPACK_IMPORTED_MODULE_1__.Booking(Math.random().toString(), placeId, this.authService.userId, placeTitle, placeImg, firstName, lastName, guestNumber, dateFrom, dateTo);
-        return this.bookings.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.take)(1), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.delay)(1000), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.tap)(bookings => {
-            this.booking.next(bookings.concat(newBooking));
-        }));
-    }
-    cancelBooking(bookingId) {
-        return this.bookings.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.take)(1), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.delay)(1000), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.tap)(bookings => {
-            this.booking.next(bookings.filter(b => b.id !== bookingId));
+        const newBooking = new _create_booking_booking_model__WEBPACK_IMPORTED_MODULE_2__.BookingModel(Math.random().toString(), placeId, this.authService.userId, placeTitle, placeImg, firstName, lastName, guestNumber, dateFrom, dateTo);
+        return this.bookings.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.take)(1), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.delay)(1000), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.tap)(booking => {
+            this.bookingss.next(booking.concat(newBooking));
         }));
     }
 };
 BookingService.ctorParameters = () => [
-    { type: _auth_auth_service__WEBPACK_IMPORTED_MODULE_0__.AuthService }
+    { type: _auth_auth_service__WEBPACK_IMPORTED_MODULE_0__.AuthService },
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_7__.HttpClient }
 ];
-BookingService = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Injectable)({ providedIn: 'root' })
+BookingService = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_9__.Injectable)({ providedIn: 'root' })
 ], BookingService);
 
 
@@ -145,12 +199,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "BookingsPage": () => (/* binding */ BookingsPage)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _bookings_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bookings.page.html?ngResource */ 8263);
-/* harmony import */ var _bookings_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./bookings.page.scss?ngResource */ 1083);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 2560);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ 3819);
-/* harmony import */ var _booking_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./booking.service */ 3118);
+/* harmony import */ var _home_karla_Documentos_booking_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _bookings_page_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./bookings.page.html?ngResource */ 8263);
+/* harmony import */ var _bookings_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./bookings.page.scss?ngResource */ 1083);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var _auth_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../auth/auth.service */ 384);
+/* harmony import */ var _booking_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./booking.service */ 3118);
+
+
 
 
 
@@ -158,42 +216,96 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let BookingsPage = class BookingsPage {
-    constructor(bookingService, loadingController) {
-        this.bookingService = bookingService;
-        this.loadingController = loadingController;
-    }
-    ngOnInit() {
-        this.bookingSub = this.bookingService.bookings.subscribe(bookings => {
-            this.loadedBookings = bookings;
-        });
-    }
-    onCancelBooking(bookingId, sliding) {
-        sliding.close();
-        this.loadingController.create({ message: 'Cancelling booking...' }).then(loadingEl => {
-            loadingEl.present();
-            this.bookingService.cancelBooking(bookingId).subscribe(() => {
-                loadingEl.dismiss();
-            });
-        });
-    }
-    ngOnDestroy() {
-        if (this.bookingSub) {
-            this.bookingSub.unsubscribe();
-        }
-    }
-};
-BookingsPage.ctorParameters = () => [
-    { type: _booking_service__WEBPACK_IMPORTED_MODULE_2__.BookingService },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.LoadingController }
-];
-BookingsPage = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
-        selector: 'app-bookings',
-        template: _bookings_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
-        styles: [_bookings_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
-    })
-], BookingsPage);
+  constructor(bookingService, authService, loadingController) {
+    this.bookingService = bookingService;
+    this.authService = authService;
+    this.loadingController = loadingController;
+  }
 
+  ngOnInit() {
+    this.bookingSub = this.bookingService.bookings.subscribe(bookings => {
+      this.loadedBookings = bookings;
+    });
+  }
+
+  ionViewWillEnter() {
+    this.loadBookings();
+  }
+
+  loadBookings(event) {
+    var _this = this;
+
+    return (0,_home_karla_Documentos_booking_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+      const loading = yield _this.loadingController.create({
+        message: 'Loading...',
+        spinner: 'bubbles'
+      });
+      yield loading.present(); //convertir data json recibido del servidor a string
+
+      _this.bookingService.listBookings().subscribe(resp => {
+        loading.dismiss();
+        const listString = JSON.stringify(resp); //lista todos los lugares
+
+        _this.loadedBookings = JSON.parse(listString); //lista solos los que puede hacer reservacion
+
+        _this.bookable = JSON.parse(listString);
+        console.log('userId: ' + _this.authService.userId); //let j=0;
+
+        for (let i = 0; i < _this.bookable.length; i++) {
+          console.log('JSON Places ' + i + ': ' + _this.bookable[i].placeTitle);
+
+          if (_this.bookable[i].userId === _this.authService.userId) {
+            console.log('entro a filtro ' + _this.bookable[i].placeTitle);
+
+            _this.bookable.splice(i, i);
+
+            if (i !== 0) {
+              i--;
+            }
+          }
+        }
+
+        event?.target.complete();
+      }, err => {
+        console.log(err.message);
+        loading.dismiss();
+      });
+    })();
+  }
+  /*
+  onCancelBooking(bookingId: string, sliding: IonItemSliding) {
+    sliding.close();
+    this.loadingController.create({ message: 'Cancelling booking...' }).then(loadingEl => {
+      loadingEl.present();
+      this.bookingService.cancelBooking(bookingId).subscribe(() => {
+        loadingEl.dismiss();
+      });
+    });
+  }
+  */
+
+
+  ngOnDestroy() {
+    if (this.bookingSub) {
+      this.bookingSub.unsubscribe();
+    }
+  }
+
+};
+
+BookingsPage.ctorParameters = () => [{
+  type: _booking_service__WEBPACK_IMPORTED_MODULE_4__.BookingService
+}, {
+  type: _auth_auth_service__WEBPACK_IMPORTED_MODULE_3__.AuthService
+}, {
+  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.LoadingController
+}];
+
+BookingsPage = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
+  selector: 'app-bookings',
+  template: _bookings_page_html_ngResource__WEBPACK_IMPORTED_MODULE_1__,
+  styles: [_bookings_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__]
+})], BookingsPage);
 
 
 /***/ }),
@@ -206,9 +318,9 @@ BookingsPage = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Booking": () => (/* binding */ Booking)
+/* harmony export */   "BookingModel": () => (/* binding */ BookingModel)
 /* harmony export */ });
-class Booking {
+class BookingModel {
     constructor(id, placeId, userId, placeTitle, placeImg, firstName, lastName, guestNumber, bookedFrom, bookedTo) {
         this.id = id;
         this.placeId = placeId;
@@ -732,7 +844,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \********************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button menu=\"menu-content\"></ion-menu-button>\n    </ion-buttons>\n    <ion-title>Your Bookings</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid fixed>\n    <ion-row>\n      <ion-col\n        sizeMd=\"6\"\n        offsetMd=\"3\"\n        *ngIf=\"!loadedBookings || loadedBookings.length <=0\"\n        class=\"ion-text-center\"\n      >\n        <p>No bookings found</p>\n      </ion-col>\n      <ion-col\n        sizeMd=\"6\"\n        offsetMd=\"3\"\n        *ngIf=\"loadedBookings && loadedBookings.length > 0\"\n      >\n        <ion-list>\n          <ion-item-sliding\n            *ngFor=\"let booking of loadedBookings\"\n            #slidingBooking\n          >\n            <ion-item>\n              <ion-label>\n                <h5>{{booking.placeTitle}}</h5>\n                <p>Guests: {{booking.guestNumber}}</p>\n              </ion-label>\n            </ion-item>\n            <ion-item-options side=\"start\">\n              <ion-item-option\n                color=\"danger\"\n                (click)=\"onCancelBooking(booking.id, slidingBooking)\"\n              >\n                <ion-icon slot=\"icon-only\" name=\"trash\"></ion-icon>\n              </ion-item-option>\n            </ion-item-options>\n          </ion-item-sliding>\n        </ion-list>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n";
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button menu=\"menu-content\"></ion-menu-button>\n    </ion-buttons>\n    <ion-title>Your Bookings</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid fixed>\n    <ion-row>\n      <ion-col\n        sizeMd=\"6\"\n        offsetMd=\"3\"\n        *ngIf=\"!loadedBookings || loadedBookings.length <=0\"\n        class=\"ion-text-center\"\n      >\n        <p>No bookings found</p>\n      </ion-col>\n      <ion-col\n        sizeMd=\"6\"\n        offsetMd=\"3\"\n        *ngIf=\"loadedBookings && loadedBookings.length > 0\"\n      >\n        <ion-list>\n          <ion-item-sliding\n            *ngFor=\"let booking of loadedBookings\"\n            #slidingBooking\n          >\n            <ion-item>\n              <ion-thumbnail slot=\"start\">\n                <ion-img [src]=\"booking.placeImg\"></ion-img>\n              </ion-thumbnail>\n              <ion-label>\n                <h5>{{booking.placeTitle}}</h5>\n                <p>Guests: {{booking.guestNumber}}</p>\n              </ion-label>\n            </ion-item>\n            <ion-item-options side=\"start\">\n              <ion-item-option\n                color=\"danger\"\n                (click)=\"onCancelBooking(booking.id, slidingBooking)\"\n              >\n                <ion-icon slot=\"icon-only\" name=\"trash\"></ion-icon>\n              </ion-item-option>\n            </ion-item-options>\n          </ion-item-sliding>\n        </ion-list>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n";
 
 /***/ })
 

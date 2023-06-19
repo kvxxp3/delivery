@@ -124,15 +124,12 @@ let NewOfferPage = class NewOfferPage {
         this.router = router;
         this.loadingCtrl = loadingCtrl;
         this.authService = authService;
-        this.newPlace = {
-            title: 'string',
-            description: 'string',
-            imageURL: 'string',
-            price: 0,
-            availableFrom: '2023-06-24',
-            availableTo: '2023-06-24',
-            userId: 'string',
-            location: 'string'
+        this.newProducto = {
+            nombre: 'string',
+            des: 'string',
+            precio: 'string',
+            res: 0,
+            imagen: 'string'
         };
     }
     ngOnInit() {
@@ -152,22 +149,8 @@ let NewOfferPage = class NewOfferPage {
             price: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormControl(null, {
                 updateOn: 'blur',
                 validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.min(1)]
-            }),
-            dateFrom: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormControl(null, {
-                updateOn: 'blur',
-                validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required]
-            }),
-            dateTo: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormControl(null, {
-                updateOn: 'blur',
-                validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required]
-            }),
-            location: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormControl(null, {
-                validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required]
             })
         });
-    }
-    onLocationPicked(location) {
-        this.form.patchValue({ location: location });
     }
     onCreateOffer() {
         if (!this.form.valid) {
@@ -184,24 +167,21 @@ let NewOfferPage = class NewOfferPage {
             });
         });
     }
-    //NEW
-    createPlace() {
+    createProduct() {
         if (!this.form.valid) {
             return;
         }
         this.loadingCtrl.create({
-            message: 'Creating place...'
+            message: 'Creating product...'
         }).then(loadingEl => {
             loadingEl.present();
-            this.newPlace.userId = this.authService.userId;
-            this.newPlace.title = this.form.value.title;
-            this.newPlace.description = this.form.value.description;
-            this.newPlace.imageURL = this.form.value.imageURL;
-            this.newPlace.price = this.form.value.price;
-            this.newPlace.availableFrom = this.datePipe.transform(this.form.value.dateFrom, 'yyyy-MM-dd');
-            this.newPlace.availableTo = this.datePipe.transform(this.form.value.dateTo, 'yyyy-MM-dd');
-            this.newPlace.location = this.form.value.location;
-            this.placesService.newPlace(this.newPlace).subscribe(() => {
+            this.newProducto.nombre = this.form.value.title;
+            this.newProducto.des = this.form.value.description;
+            this.newProducto.precio = this.form.value.price;
+            this.newProducto.imagen = this.form.value.imageURL;
+            this.newProducto.res = +this.authService.userId;
+            console.log(this.newProducto);
+            this.placesService.addProduct(this.newProducto.nombre, this.newProducto.des, this.newProducto.precio, +this.newProducto.res, this.newProducto.imagen).subscribe(() => {
                 loadingEl.dismiss();
                 this.form.reset();
                 this.router.navigate(['/home/tabs/offers']);
@@ -14219,7 +14199,7 @@ module.exports = "@import url(\"https://unpkg.com/leaflet@1.9.3/dist/leaflet.css
 /***/ ((module) => {
 
 "use strict";
-module.exports = ".picker {\n  width: 30rem;\n  max-width: 80%;\n  height: 20rem;\n  max-height: 30vh;\n  border: 1px solid var(--ion-color-primary);\n  margin: auto;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n}\n\n.location-image {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImxvY2F0aW9uLXBpY2tlci5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLFlBQUE7RUFDQSxjQUFBO0VBQ0EsYUFBQTtFQUNBLGdCQUFBO0VBQ0EsMENBQUE7RUFDQSxZQUFBO0VBQ0EsYUFBQTtFQUNBLHVCQUFBO0VBQ0EsbUJBQUE7RUFDQSxxQkFBQTtBQUNKOztBQUVBO0VBQ0ksV0FBQTtFQUNBLFlBQUE7RUFDQSxpQkFBQTtBQUNKIiwiZmlsZSI6ImxvY2F0aW9uLXBpY2tlci5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5waWNrZXIge1xuICAgIHdpZHRoOiAzMHJlbTtcbiAgICBtYXgtd2lkdGg6IDgwJTtcbiAgICBoZWlnaHQ6IDIwcmVtO1xuICAgIG1heC1oZWlnaHQ6IDMwdmg7XG4gICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0taW9uLWNvbG9yLXByaW1hcnkpO1xuICAgIG1hcmdpbjogYXV0bztcbiAgICBkaXNwbGF5OiBmbGV4O1xuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAgYWxpZ24tY29udGVudDogY2VudGVyO1xufVxuXG4ubG9jYXRpb24taW1hZ2Uge1xuICAgIHdpZHRoOiAxMDAlO1xuICAgIGhlaWdodDogMTAwJTtcbiAgICBvYmplY3QtZml0OiBjb3Zlcjtcbn0iXX0= */";
+module.exports = ".picker {\n  width: 40vh;\n  max-width: 90%;\n  height: 20rem;\n  max-height: 30vh;\n  border: 1px solid var(--ion-color-primary);\n  margin: auto;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.location-image {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImxvY2F0aW9uLXBpY2tlci5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLFdBQUE7RUFDQSxjQUFBO0VBQ0EsYUFBQTtFQUNBLGdCQUFBO0VBQ0EsMENBQUE7RUFDQSxZQUFBO0VBQ0EsYUFBQTtFQUNBLHVCQUFBO0VBQ0EsbUJBQUE7QUFDSjs7QUFFQTtFQUNJLFdBQUE7RUFDQSxZQUFBO0VBQ0EsaUJBQUE7QUFDSiIsImZpbGUiOiJsb2NhdGlvbi1waWNrZXIuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIucGlja2VyIHtcbiAgICB3aWR0aDogNDB2aDtcbiAgICBtYXgtd2lkdGg6IDkwJTtcbiAgICBoZWlnaHQ6IDIwcmVtO1xuICAgIG1heC1oZWlnaHQ6IDMwdmg7XG4gICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0taW9uLWNvbG9yLXByaW1hcnkpO1xuICAgIG1hcmdpbjogYXV0bztcbiAgICBkaXNwbGF5OiBmbGV4O1xuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG59XG5cbi5sb2NhdGlvbi1pbWFnZSB7XG4gICAgd2lkdGg6IDEwMCU7XG4gICAgaGVpZ2h0OiAxMDAlO1xuICAgIG9iamVjdC1maXQ6IGNvdmVyO1xufSJdfQ== */";
 
 /***/ }),
 
@@ -14230,7 +14210,7 @@ module.exports = ".picker {\n  width: 30rem;\n  max-width: 80%;\n  height: 20rem
 /***/ ((module) => {
 
 "use strict";
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button defaultHref=\"/home/tabs/offers/\"></ion-back-button>\n    </ion-buttons>\n    <ion-title>New Offer</ion-title>\n    <ion-buttons slot=\"primary\">\n      <ion-button (click)=\"createPlace()\" [disabled]=\"!form.valid\">\n        <ion-icon slot=\"icon-only\" name=\"checkmark\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <form [formGroup]=\"form\">\n    <ion-grid fixed>\n      <ion-row>\n        <ion-col size-sm=\"6\" offsetSm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Title</ion-label>\n            <ion-input type=\"text\" autocomplete autocorrect formControlName=\"title\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row>\n        <ion-col size-sm=\"6\" offsetSm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Image</ion-label>\n            <ion-input type=\"text\" formControlName=\"imageURL\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row>\n        <ion-col size-sm=\"6\" offset-sm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Short Description</ion-label>\n            <ion-textarea rows=\"3\" formControlName=\"description\"></ion-textarea>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row *ngIf=\"!form.get('description').valid && form.get('description').touched\">\n        <ion-col size-sm=\"6\" offset-sm=\"3\">\n          <p>Descriptions must be between 1 and 180 characters.</p>\n        </ion-col>\n      </ion-row>\n\n      <ion-row>\n        <ion-col size-sm=\"6\" offset-sm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Price</ion-label>\n            <ion-input type=\"number\" formControlName=\"price\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row>\n        <ion-col size-sm=\"3\" offset-sm=\"3\">\n          <ion-item>\n            <ion-datetime-button datetime=\"datetime\"></ion-datetime-button>\n            <ion-modal [keepContentsMounted]=\"true\">\n              <ng-template>\n                <ion-datetime\n                  presentation=\"date\"\n                  slot=\"date-target\"\n                  id=\"datetime\"\n                  min=\"2022-12-01\"\n                  max=\"2024-12-30\"\n                  formControlName=\"dateFrom\"\n                >\n                  <span slot=\"title\">Available From</span></ion-datetime\n                >\n              </ng-template>\n            </ion-modal>\n          </ion-item>\n        </ion-col>\n        <ion-col size-sm=\"3\">\n          <ion-item>\n            <ion-datetime-button datetime=\"datetime2\"></ion-datetime-button>\n            <ion-modal [keepContentsMounted]=\"true\">\n              <ng-template>\n                <ion-datetime\n                  presentation=\"date\"\n                  slot=\"date-target\"\n                  id=\"datetime2\"\n                  min=\"2022-12-02\"\n                  max=\"2024-12-31\"\n                  formControlName=\"dateTo\"\n                >\n                  <span slot=\"title\">Available To</span></ion-datetime\n                >\n              </ng-template>\n            </ion-modal>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n      <ion-row size-sm=\"3\" offset-sm=\"3\">\n        <div class=\"mapaDiv\">\n          <app-location-picker (locationPick)=\"onLocationPicked($event)\"></app-location-picker>\n        </div>\n      </ion-row>\n    </ion-grid>\n  </form>\n</ion-content>\n";
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button defaultHref=\"/home/tabs/offers/\"></ion-back-button>\n    </ion-buttons>\n    <ion-title>New Product</ion-title>\n    <ion-buttons slot=\"primary\">\n      <ion-button (click)=\"createProduct()\" [disabled]=\"!form.valid\">\n        <ion-icon slot=\"icon-only\" name=\"checkmark\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <form [formGroup]=\"form\">\n    <ion-grid fixed>\n      <ion-row>\n        <ion-col size-sm=\"6\" offsetSm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Product name</ion-label>\n            <ion-input type=\"text\" autocomplete autocorrect formControlName=\"title\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row>\n        <ion-col size-sm=\"6\" offsetSm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Image</ion-label>\n            <ion-input type=\"text\" formControlName=\"imageURL\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row>\n        <ion-col size-sm=\"6\" offset-sm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Short Description</ion-label>\n            <ion-textarea rows=\"3\" formControlName=\"description\"></ion-textarea>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row *ngIf=\"!form.get('description').valid && form.get('description').touched\">\n        <ion-col size-sm=\"6\" offset-sm=\"3\">\n          <p>Descriptions must be between 1 and 45 characters.</p>\n        </ion-col>\n      </ion-row>\n\n      <ion-row>\n        <ion-col size-sm=\"6\" offset-sm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Price</ion-label>\n            <ion-input type=\"number\" formControlName=\"price\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n      <!--\n      <ion-row>\n        <ion-col size-sm=\"3\" offset-sm=\"3\">\n          <ion-item>\n            <ion-datetime-button datetime=\"datetime\"></ion-datetime-button>\n            <ion-modal [keepContentsMounted]=\"true\">\n              <ng-template>\n                <ion-datetime\n                  presentation=\"date\"\n                  slot=\"date-target\"\n                  id=\"datetime\"\n                  min=\"2022-12-01\"\n                  max=\"2024-12-30\"\n                  formControlName=\"dateFrom\"\n                >\n                  <span slot=\"title\">Available From</span></ion-datetime\n                >\n              </ng-template>\n            </ion-modal>\n          </ion-item>\n        </ion-col>\n        <ion-col size-sm=\"3\">\n          <ion-item>\n            <ion-datetime-button datetime=\"datetime2\"></ion-datetime-button>\n            <ion-modal [keepContentsMounted]=\"true\">\n              <ng-template>\n                <ion-datetime\n                  presentation=\"date\"\n                  slot=\"date-target\"\n                  id=\"datetime2\"\n                  min=\"2022-12-02\"\n                  max=\"2024-12-31\"\n                  formControlName=\"dateTo\"\n                >\n                  <span slot=\"title\">Available To</span></ion-datetime\n                >\n              </ng-template>\n            </ion-modal>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n      -->\n      <!--\n      <ion-row size-sm=\"3\" offset-sm=\"3\">\n        <div class=\"mapaDiv\">\n          <app-location-picker (locationPick)=\"onLocationPicked($event)\"></app-location-picker>\n        </div>\n      </ion-row>\n      -->\n    </ion-grid> \n  </form>\n</ion-content>\n";
 
 /***/ }),
 

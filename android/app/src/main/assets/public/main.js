@@ -38,6 +38,20 @@ const routes = [
         path: 'bookings',
         loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_bookings_bookings_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./bookings/bookings.module */ 7938)).then(m => m.BookingsPageModule),
         canLoad: [_auth_auth_guard__WEBPACK_IMPORTED_MODULE_0__.AuthGuard]
+    },
+    {
+        path: 'pruebas',
+        children: [
+            {
+                path: '',
+                loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pruebas_pruebas_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pruebas/pruebas.module */ 3442)).then(m => m.PruebasPageModule),
+                //canLoad: [AuthGuard]
+            },
+            {
+                path: ':restaurantId',
+                loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pruebas_pedido_pedido_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pruebas/pedido/pedido.module */ 8002)).then(m => m.PedidoPageModule)
+            }
+        ]
     }
 ];
 let AppRoutingModule = class AppRoutingModule {
@@ -82,10 +96,13 @@ let AppComponent = class AppComponent {
     constructor(authService, router) {
         this.authService = authService;
         this.router = router;
+        this.authService.userType;
     }
     onLogout() {
         this.authService.logout();
         this.router.navigateByUrl('/auth');
+    }
+    checar() {
     }
 };
 AppComponent.ctorParameters = () => [
@@ -202,21 +219,43 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AuthService": () => (/* binding */ AuthService)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ 8987);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/environments/environment */ 2340);
+
+
 
 
 let AuthService = class AuthService {
-    //FALTA CREAR METODOS PARA REGISTRO, GUARDAR DATA DE USUARIOS Y VALIDAR LOGIN
-    constructor() {
-        this.userisAuth = true;
+    constructor(http) {
+        this.http = http;
+        this.userisAuth = false;
         this.idUser = 'abc';
+        this.type = 'C';
+        this.tarjeta = '';
+        this.dir = 'C';
+        this.aux = '';
     }
-    get userIsAuth() {
-        return this.userisAuth;
+    //APP DELIVERY
+    //login
+    getUser(correo, contra) {
+        return this.http.get(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiURL}/login/${correo}/${contra}`);
     }
-    get userId() {
-        return this.idUser;
+    getUserSync(correo, contra) {
+        return this.getUser(correo, contra).toPromise();
+    }
+    getID(correo) {
+        return this.http.get(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiURL}/usuario/correo/${correo}`);
+    }
+    getIDSync(correo) {
+        return this.getID(correo).toPromise();
+    }
+    getType(id) {
+        return this.http.get(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiURL}/usuario/id/${id}`);
+    }
+    getTypeSync(id) {
+        return this.getType(id).toPromise();
     }
     login() {
         this.userisAuth = true;
@@ -224,10 +263,86 @@ let AuthService = class AuthService {
     logout() {
         this.userisAuth = false;
     }
+    updateUserId(id) {
+        this.idUser = id;
+        console.log("NUEVO USUARIO LOGEADO: " + this.idUser);
+    }
+    updateUserType(tipo) {
+        this.type = tipo;
+        console.log("NUEVO TIPO LOGEADO: " + this.type);
+    }
+    get userIsAuth() {
+        return this.userisAuth;
+    }
+    get userId() {
+        return this.idUser;
+    }
+    get userType() {
+        return this.type;
+    }
+    //REGISTRO
+    postUser(nombre, contra, correo, tipo) {
+        return this.http.post(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiURL}/register/${nombre}/${contra}/${correo}/${tipo}`, nombre);
+    }
+    postUserSync(nombre, contra, correo, tipo) {
+        return this.postUser(nombre, contra, correo, tipo).toPromise();
+    }
+    //ALTA TARJETA
+    postTarjeta(tipo, clabe) {
+        return this.http.post(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiURL}/altaTarjeta/${tipo}/${clabe}`, tipo);
+    }
+    postTarjetaSync(tipo, clabe) {
+        return this.postTarjeta(tipo, clabe).toPromise();
+    }
+    //get id tarjeta
+    getIDTarjeta(tipo, clabe) {
+        return this.http.get(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiURL}/tarjeta/getID/${tipo}/${clabe}`);
+    }
+    getIDTarjetaSync(tipo, clabe) {
+        return this.getIDTarjeta(tipo, clabe).toPromise();
+    }
+    updateIDTarjeta(tipo) {
+        this.tarjeta = tipo;
+        console.log("NUEVO TARJETA LOGEADO: " + this.tarjeta);
+    }
+    //ALTA DIRECCION
+    postDir(calle, colonia, numero, ref) {
+        return this.http.post(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiURL}/altaDir/${calle}/${colonia}/${numero}/${ref}`, calle);
+    }
+    postDirSync(calle, colonia, numero, ref) {
+        return this.postDir(calle, colonia, numero, ref).toPromise();
+    }
+    //get id dir por la calle y numero
+    getIDDIR(calle, numero) {
+        return this.http.get(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiURL}/dir/getID/${calle}/${numero}`);
+    }
+    updateIDDireccion(tipo) {
+        this.dir = tipo;
+        console.log("NUEVO DIR LOGEADO: " + this.dir);
+    }
+    getIDDirSync(calle, numero) {
+        return this.getIDDIR(calle, numero).toPromise();
+    }
+    //ALTA CLIENTE
+    postCliente(nombre, app, apm, tel, usuario, tarjeta) {
+        return this.http.post(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiURL}/altaCliente/${nombre}/${app}/${apm}/${tel}/${usuario}/${tarjeta}`, nombre);
+    }
+    postClienteSync(nombre, app, apm, tel, usuario, tarjeta) {
+        return this.postCliente(nombre, app, apm, tel, usuario, tarjeta).toPromise();
+    }
+    //ALTA RESTAURANTE
+    postRestaurant(nombre, tel, sucursal, usuario, dir, tarjeta) {
+        return this.http.post(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiURL}/altaRestaurante/${nombre}/${tel}/${sucursal}/${usuario}/${dir}/${tarjeta}`, nombre);
+    }
+    postRestaurantSync(nombre, tel, sucursal, usuario, dir, tarjeta) {
+        return this.postRestaurant(nombre, tel, sucursal, usuario, dir, tarjeta).toPromise();
+    }
 };
-AuthService.ctorParameters = () => [];
-AuthService = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.Injectable)({
+AuthService.ctorParameters = () => [
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpClient }
+];
+AuthService = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
         providedIn: 'root'
     })
 ], AuthService);
@@ -252,7 +367,8 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 const environment = {
     production: false,
-    apiURL: 'http://192.168.36.102:3000'
+    //apiURL: 'http://UbuntuServer:5000'
+    apiURL: 'http://192.168.1.67:5000'
 };
 /*
  * For easier debugging in development mode, you can import the following file
@@ -474,7 +590,7 @@ var map = {
 		"node_modules_ionic_core_dist_esm_ion-select_3_entry_js"
 	],
 	"./ion-slide_2.entry.js": [
-		668,
+		294,
 		"node_modules_ionic_core_dist_esm_ion-slide_2_entry_js"
 	],
 	"./ion-spinner.entry.js": [
@@ -555,7 +671,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /***/ ((module) => {
 
 "use strict";
-module.exports = "<ion-app>\n  <ion-menu contentId=\"menu-content\" menuId=\"menu-content\" side=\"start\" type=\"overlay\">\n    <ion-header>\n      <ion-toolbar>\n        <ion-title>Menu</ion-title>\n      </ion-toolbar>\n    </ion-header>\n\n    <ion-content>\n      <ion-list>\n        <ion-menu-toggle menu=\"menu-content\">\n          <ion-item lines=\"none\" routerLink=\"/home/tabs/discover\">\n            <ion-icon slot=\"start\" name=\"business\"></ion-icon>\n            <ion-label>Discover New Places</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n        <ion-menu-toggle menu=\"menu-content\">\n          <ion-item lines=\"none\" routerLink=\"/bookings\">\n            <ion-icon slot=\"start\" name=\"checkbox-outline\"></ion-icon>\n            <ion-label>Your Bookings</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n        <ion-menu-toggle menu=\"menu-content\">\n          <ion-item lines=\"none\" (click)=\"onLogout()\" button>\n            <ion-icon slot=\"start\" name=\"exit\"></ion-icon>\n            <ion-label>Logout</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n      </ion-list>\n    </ion-content>\n  </ion-menu>\n\n  <ion-router-outlet main id=\"menu-content\"></ion-router-outlet>\n</ion-app>\n";
+module.exports = "<ion-app>\n  <ion-menu contentId=\"menu-content\" menuId=\"menu-content\" side=\"start\" type=\"overlay\">\n    <ion-header>\n      <ion-toolbar>\n        <ion-title>Menu</ion-title>\n      </ion-toolbar>\n    </ion-header>\n\n    <ion-content>\n      <ion-list>\n        <ion-menu-toggle menu=\"menu-content\">\n          <ion-item lines=\"none\" routerLink=\"/home/tabs/discover\">\n            <ion-icon slot=\"start\" name=\"restaurant-outline\"></ion-icon>\n            <ion-label>Explore Restaurants</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n        <!--\n        <ion-menu-toggle menu=\"menu-content\" *ngIf=\"tipo == 'C'\"> \n          <ion-item lines=\"none\" routerLink=\"/bookings\">\n            <ion-icon slot=\"start\" name=\"person-circle-outline\"></ion-icon>\n            <ion-label>Account</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n        <ion-menu-toggle menu=\"menu-content\" *ngIf=\"tipo == 'R'\"> \n          <ion-item lines=\"none\" routerLink=\"/bookings\">\n            <ion-icon slot=\"start\" name=\"receipt-outline\"></ion-icon>\n            <ion-label>Manage Restaurant</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n      -->\n        <ion-menu-toggle menu=\"menu-content\">\n          <ion-item lines=\"none\" (click)=\"onLogout()\" button>\n            <ion-icon slot=\"start\" name=\"exit\"></ion-icon>\n            <ion-label>Logout</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n      </ion-list>\n    </ion-content>\n  </ion-menu>\n\n  <ion-router-outlet main id=\"menu-content\"></ion-router-outlet>\n</ion-app>\n";
 
 /***/ })
 
