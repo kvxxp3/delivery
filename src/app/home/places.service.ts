@@ -11,6 +11,7 @@ import { PlacesData } from '../interfaces/places-data';
 import { PlaceData } from '../interfaces/place-data';
 import { Restaurantes } from '../interfaces/restaurantes';
 import { Producto } from '../interfaces/producto';
+import { ProductoAdd } from '../interfaces/producto-add';
 import { Productos } from '../pruebas/pedido/producto.model';
 
 @Injectable({
@@ -51,6 +52,14 @@ export class PlacesService {
     )
   ]);
 
+  productoAux: ProductoAdd = {
+    nombre: 'product',
+    des: 'string',
+    precio: 'string',
+    restaurante: 'string',
+    foto: 'string'
+  }
+
   constructor(private authService: AuthService, private http: HttpClient) { }
 
   //toma todos los productos por el id del restaurante
@@ -65,8 +74,19 @@ export class PlacesService {
 
   ////////////////////////////////////////////////
 
-  addProduct(name: string, desc: string, price: string, rest: number, foto: string): Observable<any>{
-    return this.http.post<any>(`${environment.apiURL}/producto/add`, {nombre: {name}, des: {desc}, precio: {price}, res: {rest}, imagen: {foto}});
+  //addProduct(name: string, desc: string, price: string, rest: number, foto: string): Observable<any>{
+  //  return this.http.post<any>(`${environment.apiURL}/producto/add`, {nombre: {name}, des: {desc}, precio: {price}, res: {rest}, imagen: {foto}});
+  //}
+
+  addProduct(name: string, desc: string, price: string, rest: string, foto: string): Observable<ProductoAdd>{
+    this.productoAux.nombre = name;
+    this.productoAux.des = desc;
+    this.productoAux.precio = price;
+    this.productoAux.restaurante = rest;
+    this.productoAux.foto = foto;
+    console.log("OBJETO ANTES DE ENVIAR: " + this.productoAux);
+    
+    return this.http.post<ProductoAdd>(`${environment.apiURL}/producto/add`, this.productoAux);
   }
 
   deleteProduct(id: number): Observable<Productos>{

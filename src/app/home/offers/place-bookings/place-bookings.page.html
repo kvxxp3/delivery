@@ -3,13 +3,40 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home/tabs/offers"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ place.title }}</ion-title>
+    <ion-title>{{ productName }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
+<ion-content class="ion-text-center">
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col sizeSm="6" offsetSm="3">
+        <ion-img [src]="product.foto"></ion-img>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col sizeSm="6" offsetSm="3">
+        <p style="font-weight: bold;">Description:</p>
+        <p>{{ product.des }}</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-row>
+    <ion-col sizeSm="6" offsetSm="3" text-center>
+      <p style="font-weight: bold;">Price per unit:</p>
+      <p>{{ product.precio }}</p>
+    </ion-col>
+  </ion-row>
+</ion-content>
+
 <ion-content>
   <ion-button expand="block" fill="clear" shape="round" color="primary"
-    [routerLink]="['/', 'home', 'tabs', 'offers', 'edit', place.id]">
+    [routerLink]="['/', 'home', 'tabs', 'offers', 'edit', idOffer]">
     Edit
+  </ion-button>
+  <ion-button expand="block" fill="clear" shape="round" color="primary" (click)="destroyProduct()">
+    Delete
   </ion-button>
 </ion-content>

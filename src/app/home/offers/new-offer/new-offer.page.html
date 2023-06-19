@@ -3,9 +3,9 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home/tabs/offers/"></ion-back-button>
     </ion-buttons>
-    <ion-title>New Offer</ion-title>
+    <ion-title>New Product</ion-title>
     <ion-buttons slot="primary">
-      <ion-button (click)="createPlace()" [disabled]="!form.valid">
+      <ion-button (click)="createProduct()" [disabled]="!form.valid">
         <ion-icon slot="icon-only" name="checkmark"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -18,7 +18,7 @@
       <ion-row>
         <ion-col size-sm="6" offsetSm="3">
           <ion-item>
-            <ion-label position="floating">Title</ion-label>
+            <ion-label position="floating">Product name</ion-label>
             <ion-input type="text" autocomplete autocorrect formControlName="title"></ion-input>
           </ion-item>
         </ion-col>
@@ -44,7 +44,7 @@
 
       <ion-row *ngIf="!form.get('description').valid && form.get('description').touched">
         <ion-col size-sm="6" offset-sm="3">
-          <p>Descriptions must be between 1 and 180 characters.</p>
+          <p>Descriptions must be between 1 and 45 characters.</p>
         </ion-col>
       </ion-row>
 
@@ -56,7 +56,7 @@
           </ion-item>
         </ion-col>
       </ion-row>
-
+      <!--
       <ion-row>
         <ion-col size-sm="3" offset-sm="3">
           <ion-item>
@@ -97,11 +97,14 @@
           </ion-item>
         </ion-col>
       </ion-row>
+      -->
+      <!--
       <ion-row size-sm="3" offset-sm="3">
         <div class="mapaDiv">
           <app-location-picker (locationPick)="onLocationPicked($event)"></app-location-picker>
         </div>
       </ion-row>
-    </ion-grid>
+      -->
+    </ion-grid> 
   </form>
 </ion-content>

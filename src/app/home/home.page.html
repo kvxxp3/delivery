@@ -5,8 +5,20 @@
       <ion-label>Discover</ion-label>
     </ion-tab-button>
     <ion-tab-button *ngIf="tipo == 'R'" tab="offers">
-      <ion-icon name="card"></ion-icon>
+      <ion-icon name="fast-food-outline"></ion-icon>
       <ion-label>Food</ion-label>
+    </ion-tab-button>
+    <ion-tab-button *ngIf="tipo == 'R'" tab="offers">
+      <ion-icon name="receipt-outline"></ion-icon>
+      <ion-label>Manage</ion-label>
+    </ion-tab-button>
+    <ion-tab-button *ngIf="tipo == 'R'" tab="offers" routerLink="/">
+      <ion-icon name="person-circle-outline"></ion-icon>
+      <ion-label>Account</ion-label>
+    </ion-tab-button>
+    <ion-tab-button *ngIf="tipo == 'C'" tab="offers" routerLink="/">
+      <ion-icon name="person-circle-outline"></ion-icon>
+      <ion-label>Account</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>

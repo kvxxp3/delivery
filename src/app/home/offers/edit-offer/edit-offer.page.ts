@@ -34,7 +34,7 @@ export class EditOfferPage implements OnInit {
   ) { }
 
   ionViewWillEnter(){
-    this.getProductById(this.getIDfromURL());
+    //this.getProductById(this.getIDfromURL());
   }
 
   ngOnInit() {
@@ -64,8 +64,27 @@ export class EditOfferPage implements OnInit {
     //     validators: [Validators.required, Validators.maxLength(180)]
     //   })
     // });
+    this.form = new FormGroup({
+      title: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required, Validators.maxLength(45)]
+      }),
+      image: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required, Validators.maxLength(250)]
+      }),
+      description: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required, Validators.maxLength(45)]
+      }),
+      price: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required, Validators.min(1)]
+      })
+    });
 
-    this.getProductById(this.getIDfromURL());
+    //this.getProductById(this.getIDfromURL());
+    this.obtenerDatos();
   }
 
   getIDfromURL(){
@@ -79,32 +98,48 @@ export class EditOfferPage implements OnInit {
   getProductById(product: number){
     this.placesService.getProductByID(product).subscribe(
       (resp: any) => {
-        this.product = {
+        console.log(resp);
+        /*this.product = {
           id: resp.id,
           nombre: resp.nombre,
           des: resp.des,
           precio: resp.precio,
           restaurante: resp.restaurante,
           foto: resp.foto
-        };
+        };*/
+        this.product.id = resp.id;
+        this.product.nombre = resp.nombre;
+        this.product.des = resp.des;
+        this.product.precio = resp.precio;
+        this.product.restaurante = resp.restaurante;
+        this.product.foto = resp.foto;
+
+        /*
+        this.form.value.title = this.product.nombre;
+        this.form.value.description = this.product.des;
+        this.form.value.price = this.product.precio;
+        this.form.value.image = this.product.foto;*/
+
+        console.log('INFO RECIBIDA:');
+        console.log('product id: '+this.product.id);
+        console.log('product title: '+this.product.nombre);
+        console.log('product desc: '+this.product.des);
+        console.log('product img: '+this.product.precio);
+        console.log('product restaurant: '+this.product.restaurante);
+        console.log('product price: '+this.product.foto);
+
       }
     );
 
-    console.log('INFO RECIBIDA:');
-    console.log('place id: '+this.product.id);
-    console.log('place title: '+this.product.nombre);
-    console.log('place desc: '+this.product.des);
-    console.log('place img: '+this.product.precio);
-    console.log('place price: '+this.product.restaurante);
-    console.log('place price: '+this.product.foto);
+    
   }
 
   updateProduct(){
     console.log('TO BE SENT:');
-    console.log('product title: '+this.form.value.nombre);
-    console.log('product desc: '+this.form.value.des);
-    console.log('product price: '+this.form.value.precio);
-    console.log('product image: '+this.form.value.foto);
+    console.log('product title: '+this.product.nombre);
+    console.log('product desc: '+this.product.des);
+    console.log('product price: '+this.product.precio);
+    console.log('product image: '+this.product.foto);
 
     if (!this.form.valid) {
           return;
@@ -113,7 +148,7 @@ export class EditOfferPage implements OnInit {
           message: 'Updating place...'
         }).then(loadingEl => {
           loadingEl.present();
-          this.placesService.updateProduct(this.getIDfromURL(), this.form.value.nombre, this.form.value.des, this.form.value.precio, this.form.value.foto)
+          this.placesService.updateProduct(Number(this.product.id), this.product.nombre, this.product.des, this.product.precio, this.product.foto)
           .subscribe(() => {
             loadingEl.dismiss();
             this.form.reset();
@@ -121,4 +156,9 @@ export class EditOfferPage implements OnInit {
           });
         });
   }
+
+  obtenerDatos(){
+    this.getProductById(this.getIDfromURL());
+  }
+
 }
