@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/pruebas/pedido"></ion-back-button>
+      <ion-back-button defaultHref="/pruebas"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ product.nombre }}</ion-title>
   </ion-toolbar>
@@ -10,7 +10,7 @@
 <ion-content class="ion-text-center">
   <ion-grid class="ion-no-padding">
     <ion-row>
-      <ion-col sizeSm="6" offsetSm="3">
+      <ion-col sizeSm="6" offsetSm="3" id="imgProd">
         <ion-img [src]="product.foto"></ion-img>
       </ion-col>
     </ion-row>
