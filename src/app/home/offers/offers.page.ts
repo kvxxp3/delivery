@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { AlertController, InfiniteScrollCustomEvent, IonItemSliding, LoadingController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -14,8 +14,9 @@ import { PlacesService } from '../places.service';
   templateUrl: './offers.page.html',
   styleUrls: ['./offers.page.scss'],
 })
-export class OffersPage {
+export class OffersPage implements OnDestroy {
   products: Productos[] = [];
+  someSubscription: any;
 
   constructor(
     private placesService: PlacesService,
@@ -60,6 +61,21 @@ export class OffersPage {
     const id = +offerId;
     this.placesService.deleteProduct(id).subscribe();
     this.ionViewWillEnter();
+    this.reload();
+    
+  }
+
+  reload(){
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+    this.someSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Here is the dashing line comes in the picture.
+        // You need to tell the router that, you didn't visit or load the page previously, so mark the navigated flag to false as below.
+        this.router.navigated = false;
+      }
+    });
   }
 
   async presentAlert(offerId: number, slidingItem: IonItemSliding){
@@ -83,6 +99,12 @@ export class OffersPage {
     console.log('ROLE: '+role);
     if(role==='confirm'){
       this.onDelete(offerId, slidingItem);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.someSubscription) {
+      this.someSubscription.unsubscribe();
     }
   }
 }

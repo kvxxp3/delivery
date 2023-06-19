@@ -21,8 +21,8 @@ export class PlaceBookingsPage implements OnInit, OnDestroy {
     nombre: 'product',
     des: 'string',
     precio: 'string',
-    restaurante: 'string',
-    foto: 'string'
+    res: 0,
+    imagen: 'string'
   }
 
   constructor(private route: ActivatedRoute, private router: Router, private navCtrl: NavController, private placesService: PlacesService) { }
@@ -58,8 +58,8 @@ export class PlaceBookingsPage implements OnInit, OnDestroy {
           nombre: resp.nombre,
           des: resp.des,
           precio: resp.precio,
-          restaurante: resp.restaurante,
-          foto: resp.foto
+          res: resp.res,
+          imagen: resp.imagen
         };
         this.productName = resp.nombre;
       }

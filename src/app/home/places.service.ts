@@ -13,6 +13,7 @@ import { Restaurantes } from '../interfaces/restaurantes';
 import { Producto } from '../interfaces/producto';
 import { ProductoAdd } from '../interfaces/producto-add';
 import { Productos } from '../pruebas/pedido/producto.model';
+import { ProductoUpdate } from '../interfaces/producto-update';
 
 @Injectable({
   providedIn: 'root'
@@ -56,8 +57,15 @@ export class PlacesService {
     nombre: 'product',
     des: 'string',
     precio: 'string',
-    restaurante: 'string',
-    foto: 'string'
+    res: 0,
+    imagen: 'string'
+  }
+
+  productoUpdateAux: ProductoUpdate = {
+    nombre: 'product',
+    des: 'string',
+    precio: 'string',
+    imagen: 'string'
   }
 
   constructor(private authService: AuthService, private http: HttpClient) { }
@@ -78,13 +86,13 @@ export class PlacesService {
   //  return this.http.post<any>(`${environment.apiURL}/producto/add`, {nombre: {name}, des: {desc}, precio: {price}, res: {rest}, imagen: {foto}});
   //}
 
-  addProduct(name: string, desc: string, price: string, rest: string, foto: string): Observable<ProductoAdd>{
+  addProduct(name: string, desc: string, price: string, rest: number, foto: string): Observable<ProductoAdd>{
     this.productoAux.nombre = name;
     this.productoAux.des = desc;
     this.productoAux.precio = price;
-    this.productoAux.restaurante = rest;
-    this.productoAux.foto = foto;
-    console.log("OBJETO ANTES DE ENVIAR: " + this.productoAux);
+    this.productoAux.res = rest;
+    this.productoAux.imagen = foto;
+    console.log("OBJETO ANTES DE ENVIAR: " + this.productoAux.res);
     
     return this.http.post<ProductoAdd>(`${environment.apiURL}/producto/add`, this.productoAux);
   }
@@ -94,7 +102,13 @@ export class PlacesService {
   }
 
   updateProduct(id: number, name: string, desc: string, price: string, foto: string): Observable<any>{
-    return this.http.put<any>(`${environment.apiURL}/producto/update/${id}`, {nombre: {name}, des: {desc}, precio: {price}, imagen: {foto}});
+    this.productoUpdateAux.nombre = name;
+    this.productoUpdateAux.des = desc;
+    this.productoUpdateAux.precio = price;
+    this.productoUpdateAux.imagen = foto;
+    console.log("OBJETO ANTES DE ENVIAR: " + this.productoUpdateAux.nombre);
+    
+    return this.http.put<any>(`${environment.apiURL}/producto/update/${id}`, this.productoUpdateAux);
   }
 
   ////////////////////////////////////////////////

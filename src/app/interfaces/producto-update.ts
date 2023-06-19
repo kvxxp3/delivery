@@ -1,7 +1,6 @@
-export interface ProductoAdd{
+export interface ProductoUpdate{
     nombre: string,
     des: string,
     precio: string,
-    res: number,
     imagen: string;
 }
