@@ -107,4 +107,13 @@ export class OffersPage implements OnDestroy {
       this.someSubscription.unsubscribe();
     }
   }
+
+  handleRefresh(event) {
+    setTimeout(() => {
+      this.products.splice(0, this.products.length);
+      let id = parseInt(this.authService.userId)
+      this.getProductsById(id);    
+      event.target.complete();
+    }, 2000);
+  }
 }

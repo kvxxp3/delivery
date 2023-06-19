@@ -9,9 +9,9 @@
 
 <ion-content class="ion-text-center">
   <ion-grid class="ion-no-padding">
-    <ion-row>
+    <ion-row class="imagen">
       <ion-col sizeSm="6" offsetSm="3">
-        <ion-img [src]="product.foto"></ion-img>
+        <ion-img [src]="product.imagen"></ion-img>
       </ion-col>
     </ion-row>
 
@@ -26,7 +26,7 @@
   <ion-row>
     <ion-col sizeSm="6" offsetSm="3" text-center>
       <p style="font-weight: bold;">Price per unit:</p>
-      <p>{{ product.precio }}</p>
+      <p>${{ product.precio }}</p>
     </ion-col>
   </ion-row>
 </ion-content>

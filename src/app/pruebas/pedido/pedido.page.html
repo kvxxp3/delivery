@@ -23,9 +23,9 @@
               <ion-img [src]="producto.foto"></ion-img>
             </ion-thumbnail>
               <ion-label color="primary">
-                <h1>Nombre: {{ producto.nombre }}</h1>
-                <h2>Precio: {{ producto.precio}}</h2>
-                <p>Descripcion: {{ producto.des }}</p>
+                <h1>{{ producto.nombre }}</h1>
+                <h2>${{ producto.precio}}</h2>
+                <p>{{ producto.des }}</p>
               </ion-label>
             </ion-item>
           </ng-container>

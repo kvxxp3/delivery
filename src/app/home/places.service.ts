@@ -111,6 +111,10 @@ export class PlacesService {
     return this.http.put<any>(`${environment.apiURL}/producto/update/${id}`, this.productoUpdateAux);
   }
 
+  public getRestaurants(){
+    return this.http.get<Restaurantes>(`${environment.apiURL}/restaurantes`);
+  }
+
   ////////////////////////////////////////////////
 
   //PAST PROJECT

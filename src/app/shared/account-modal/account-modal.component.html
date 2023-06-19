@@ -1,0 +1,141 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Almost there</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">Finish</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="forma">
+    <ion-grid fixed>
+      <ion-row *ngIf="tipoUser == 'C'">
+        <ion-col size-sm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Name</ion-label>
+            <ion-input type="text" [(ngModel)]="cliente.name" autocomplete autocorrect formControlName="nameC"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="tipoUser == 'C'"> 
+        <ion-col size-sm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Paternal Last Name</ion-label>
+            <ion-input type="text" [(ngModel)]="cliente.app" autocomplete autocorrect formControlName="appC"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="tipoUser == 'C'"> 
+        <ion-col size-sm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Maternal Last Name</ion-label>
+            <ion-input type="text" [(ngModel)]="cliente.apm" autocomplete autocorrect formControlName="apmC"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="tipoUser == 'C'">
+        <ion-col size-sm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Phone Number</ion-label>
+            <ion-input type="number" [(ngModel)]="cliente.number" autocomplete autocorrect formControlName="phoneC"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <!--Restaurante-->
+      <ion-row *ngIf="tipoUser == 'R'">
+        <ion-col size-sm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Restaurant Name</ion-label>
+            <ion-input type="text" [(ngModel)]="restaurante.name" autocomplete autocorrect formControlName="nameR"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="tipoUser == 'R'">
+        <ion-col size-sm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Phone Number</ion-label>
+            <ion-input type="number" [(ngModel)]="restaurante.number" autocomplete autocorrect formControlName="phoneR"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="tipoUser == 'R'">
+        <ion-col size-sm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Branch</ion-label>
+            <ion-input type="text" [(ngModel)]="restaurante.branch" autocomplete autocorrect formControlName="branchR"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="tipoUser == 'R'">
+        <ion-col size-sm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Address Street</ion-label>
+            <ion-input type="text" [(ngModel)]="adress.calle" autocomplete autocorrect formControlName="streetR"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="tipoUser == 'R'">
+        <ion-col size-sm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Address District</ion-label>
+            <ion-input type="text" [(ngModel)]="adress.district" autocomplete autocorrect formControlName="districtR"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="tipoUser == 'R'">
+        <ion-col size-sm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Address Number</ion-label>
+            <ion-input type="number" [(ngModel)]="adress.number" autocomplete autocorrect formControlName="numberR"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="tipoUser == 'R'"> 
+        <ion-col size-sm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Address Reference</ion-label>
+            <ion-input type="text" [(ngModel)]="adress.reference" autocomplete autocorrect formControlName="referenceR"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <!--Tarjeta-->
+      <ion-row>
+        <ion-radio-group class="opciones" formControlName="cardType" (ionChange)="selectedValue($event)">
+          <ion-label position="floating">Card Type</ion-label>
+          <ion-item>
+            <ion-radio slot="start" value="D"></ion-radio>
+            <ion-label>Debit</ion-label> 
+          </ion-item>
+          <ion-item>
+            <ion-radio slot="start" value="C"></ion-radio>
+            <ion-label>Credit</ion-label>
+        </ion-item>
+        </ion-radio-group>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-sm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Card Clabe</ion-label>
+            <ion-input type="number" [(ngModel)]="card.clabe" autocomplete autocorrect formControlName="cardClabe"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+
+
+    </ion-grid>
+  </form>
+</ion-content>
