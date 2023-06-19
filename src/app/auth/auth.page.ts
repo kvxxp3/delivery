@@ -17,6 +17,7 @@ export class AuthPage implements OnInit {
   aprobar: any;
   emailAUX: string = '';
   users: any;
+  idDir: any;
   typeAUX: string = '';
   user: UserData = {
     id: 0,
@@ -110,6 +111,32 @@ export class AuthPage implements OnInit {
           this.authService.updateUserId(id);
           //guarda el nuevo tipo en el servicio
           this.authService.updateUserType(this.userAux.type);
+
+          //IF el tipo usuario es R da de alta direccion
+          // if(this.userAux.type.match('R')){
+          //   let dir = await this.authService.postDirSync(this.auxDir.calle, this.auxDir.colonia, this.auxDir.numero, this.auxDir.ref);
+          //   console.log('SE REGISTRA LA DIR: ' + dir);
+          //   //get id de la dir
+          //   this.idDir = await this.authService.getIDDIR(this.auxDir.calle, this.auxDir.numero);
+          //   this.authService.updateIDDireccion(this.idDir);
+          // }
+          // //AMBOS DAN ALTA TARJETA
+          // let tarjeta = await this.authService.postTarjetaSync(this.auxTarj.tipo, this.auxTarj.clabe);
+          // console.log('SE REGISTRA LA TARJETA: ' + tarjeta);
+          // //get id de la dir
+          // let idTarj = await this.authService.getIDDIR(this.auxDir.calle, this.auxDir.numero);
+          // this.authService.updateIDTarjeta(idTarj);
+
+          // //IF R DA DE ALTA RESTAURANTE
+          // if(this.userAux.type.match('R')){
+          //   let res = await this.authService.postRestaurantSync(this.auxRes.nombre, this.auxRes.tel, this.auxRes.sucursal, id, this.idDir, idTarj);
+          //   console.log('SE REGISTRA EL RESTAURANTE: ' + res);
+          // }else{
+          //   //ELSE ALTA CLIENTE
+          //   let cl = await this.authService.postClienteSync(this.auxCl.nombre, this.auxCl.app, this.auxCl.apm, this.auxCl.tel, id, idTarj);
+          //   console.log('SE REGISTRA EL CLIENTE: ' + cl);
+          // }          
+
           //el estado de login cambia a true en el servicio
           this.authService.login();
           //termina loading screen
