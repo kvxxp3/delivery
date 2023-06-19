@@ -5,15 +5,16 @@
   <ion-label>
     <h1>{{ offer.nombre }}</h1>
     <div class="offerDetails">
-      <ion-icon slot="start" name="calendar" color="primary"></ion-icon>
-      <ion-text color="secondary" class="space-left">
-        {{ offer.precio}}
+      <!--<ion-icon slot="start" name="calendar" color="primary"></ion-icon>-->
+      <ion-text color="danger" class="space-left">
+        ${{ offer.precio}}
       </ion-text>
-      <span class="space-left">to</span>
-      <ion-icon slot="start" name="calendar" class="space-left" color="primary"></ion-icon>
-      <ion-text color="secondary" class="space-left">
+      <span class="space-left"></span>
+      <ion-icon slot="start" name="chatbox-ellipses-outline" class="space-left" color="primary"></ion-icon>
+      <ion-text color="secondary" class="space-left" style="width: 35%">
         {{ offer.des }}
       </ion-text>
+      
     </div>
   </ion-label>
 </ion-item>

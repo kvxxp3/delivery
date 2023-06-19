@@ -13,12 +13,13 @@
 </ion-header>
 
 <ion-content>
+  <!--<ion-button color="danger" (click)="obtenerDatos()">Obtain Data</ion-button>-->
   <form [formGroup]="form">
     <ion-grid fixed>
       <ion-row>
         <ion-col size-sm="6" offsetSm="3">
           <ion-item>
-            <ion-label position="floating">Title</ion-label>
+            <ion-label position="floating">Product name</ion-label>
             <ion-input type="text" [(ngModel)]="product.nombre" autocomplete autocorrect formControlName="title"></ion-input>
           </ion-item>
         </ion-col>
@@ -53,7 +54,7 @@
 
       <ion-row *ngIf="!form.get('description').valid && form.get('description').touched">
         <ion-col size-sm="6" offset-sm="3">
-          <p>Descriptions must be between 1 and 180 characters.</p>
+          <p>Descriptions must be between 1 and 45 characters.</p>
         </ion-col>
       </ion-row>
     </ion-grid>
