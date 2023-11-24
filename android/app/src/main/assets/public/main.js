@@ -38,6 +38,20 @@ const routes = [
         path: 'bookings',
         loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_bookings_bookings_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./bookings/bookings.module */ 7938)).then(m => m.BookingsPageModule),
         canLoad: [_auth_auth_guard__WEBPACK_IMPORTED_MODULE_0__.AuthGuard]
+    },
+    {
+        path: 'pruebas',
+        children: [
+            {
+                path: '',
+                loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pruebas_pruebas_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pruebas/pruebas.module */ 3442)).then(m => m.PruebasPageModule),
+                //canLoad: [AuthGuard]
+            },
+            {
+                path: ':restaurantId',
+                loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pruebas_pedido_pedido_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pruebas/pedido/pedido.module */ 8002)).then(m => m.PedidoPageModule)
+            }
+        ]
     }
 ];
 let AppRoutingModule = class AppRoutingModule {
@@ -82,10 +96,13 @@ let AppComponent = class AppComponent {
     constructor(authService, router) {
         this.authService = authService;
         this.router = router;
+        this.authService.userType;
     }
     onLogout() {
         this.authService.logout();
         this.router.navigateByUrl('/auth');
+    }
+    checar() {
     }
 };
 AppComponent.ctorParameters = () => [
@@ -115,14 +132,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppModule": () => (/* binding */ AppModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 2560);
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/platform-browser */ 4497);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ 124);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ 3819);
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app.component */ 5041);
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app-routing.module */ 158);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common/http */ 8987);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/platform-browser */ 4497);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ 124);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/forms */ 2508);
+/* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./shared/shared.module */ 4466);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app.component */ 5041);
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app-routing.module */ 158);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common/http */ 8987);
+
+
 
 
 
@@ -133,12 +154,16 @@ __webpack_require__.r(__webpack_exports__);
 
 let AppModule = class AppModule {
 };
-AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.NgModule)({
-        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_0__.AppComponent],
-        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_1__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_6__.HttpClientModule],
-        providers: [{ provide: _angular_router__WEBPACK_IMPORTED_MODULE_7__.RouteReuseStrategy, useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.IonicRouteStrategy }],
-        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_0__.AppComponent],
+AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.NgModule)({
+        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent],
+        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_5__.BrowserModule,
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.IonicModule.forRoot(),
+            _app_routing_module__WEBPACK_IMPORTED_MODULE_2__.AppRoutingModule,
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_7__.HttpClientModule,
+            _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.ReactiveFormsModule, _shared_shared_module__WEBPACK_IMPORTED_MODULE_0__.SharedModule],
+        providers: [{ provide: _angular_router__WEBPACK_IMPORTED_MODULE_9__.RouteReuseStrategy, useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.IonicRouteStrategy }],
+        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent],
     })
 ], AppModule);
 
@@ -202,21 +227,43 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AuthService": () => (/* binding */ AuthService)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ 8987);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/environments/environment */ 2340);
+
+
 
 
 let AuthService = class AuthService {
-    //FALTA CREAR METODOS PARA REGISTRO, GUARDAR DATA DE USUARIOS Y VALIDAR LOGIN
-    constructor() {
-        this.userisAuth = true;
+    constructor(http) {
+        this.http = http;
+        this.userisAuth = false;
         this.idUser = 'abc';
+        this.type = 'C';
+        this.tarjeta = '';
+        this.dir = 'C';
+        this.aux = '';
     }
-    get userIsAuth() {
-        return this.userisAuth;
+    //APP DELIVERY
+    //login
+    getUser(correo, contra) {
+        return this.http.get(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiURL}/login/${correo}/${contra}`);
     }
-    get userId() {
-        return this.idUser;
+    getUserSync(correo, contra) {
+        return this.getUser(correo, contra).toPromise();
+    }
+    getID(correo) {
+        return this.http.get(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiURL}/usuario/correo/${correo}`);
+    }
+    getIDSync(correo) {
+        return this.getID(correo).toPromise();
+    }
+    getType(id) {
+        return this.http.get(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiURL}/usuario/id/${id}`);
+    }
+    getTypeSync(id) {
+        return this.getType(id).toPromise();
     }
     login() {
         this.userisAuth = true;
@@ -224,13 +271,468 @@ let AuthService = class AuthService {
     logout() {
         this.userisAuth = false;
     }
+    updateUserId(id) {
+        this.idUser = id;
+        console.log("NUEVO USUARIO LOGEADO: " + this.idUser);
+    }
+    updateUserType(tipo) {
+        this.type = tipo;
+        console.log("NUEVO TIPO LOGEADO: " + this.type);
+    }
+    get userIsAuth() {
+        return this.userisAuth;
+    }
+    get userId() {
+        return this.idUser;
+    }
+    get userType() {
+        return this.type;
+    }
+    //REGISTRO
+    postUser(nombre, contra, correo, tipo) {
+        return this.http.post(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiURL}/register/${nombre}/${contra}/${correo}/${tipo}`, nombre);
+    }
+    postUserSync(nombre, contra, correo, tipo) {
+        return this.postUser(nombre, contra, correo, tipo).toPromise();
+    }
+    //ALTA TARJETA
+    postTarjeta(tipo, clabe) {
+        return this.http.post(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiURL}/altaTarjeta/${tipo}/${clabe}`, tipo);
+    }
+    postTarjetaSync(tipo, clabe) {
+        return this.postTarjeta(tipo, clabe).toPromise();
+    }
+    //get id tarjeta
+    getIDTarjeta(tipo, clabe) {
+        return this.http.get(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiURL}/tarjeta/getID/${tipo}/${clabe}`);
+    }
+    getIDTarjetaSync(tipo, clabe) {
+        return this.getIDTarjeta(tipo, clabe).toPromise();
+    }
+    updateIDTarjeta(tipo) {
+        this.tarjeta = tipo;
+        console.log("NUEVO TARJETA LOGEADO: " + this.tarjeta);
+    }
+    //ALTA DIRECCION
+    postDir(calle, colonia, numero, ref) {
+        return this.http.post(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiURL}/altaDir/${calle}/${colonia}/${numero}/${ref}`, calle);
+    }
+    postDirSync(calle, colonia, numero, ref) {
+        return this.postDir(calle, colonia, numero, ref).toPromise();
+    }
+    //get id dir por la calle y numero
+    getIDDIR(calle, numero) {
+        return this.http.get(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiURL}/dir/getID/${calle}/${numero}`);
+    }
+    updateIDDireccion(tipo) {
+        this.dir = tipo;
+        console.log("NUEVO DIR LOGEADO: " + this.dir);
+    }
+    getIDDirSync(calle, numero) {
+        return this.getIDDIR(calle, numero).toPromise();
+    }
+    //ALTA CLIENTE
+    postCliente(nombre, app, apm, tel, usuario, tarjeta) {
+        return this.http.post(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiURL}/altaCliente/${nombre}/${app}/${apm}/${tel}/${usuario}/${tarjeta}`, nombre);
+    }
+    postClienteSync(nombre, app, apm, tel, usuario, tarjeta) {
+        return this.postCliente(nombre, app, apm, tel, usuario, tarjeta).toPromise();
+    }
+    //ALTA RESTAURANTE
+    postRestaurant(nombre, tel, sucursal, usuario, dir, tarjeta) {
+        return this.http.post(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiURL}/altaRestaurante/${nombre}/${tel}/${sucursal}/${usuario}/${dir}/${tarjeta}`, nombre);
+    }
+    postRestaurantSync(nombre, tel, sucursal, usuario, dir, tarjeta) {
+        return this.postRestaurant(nombre, tel, sucursal, usuario, dir, tarjeta).toPromise();
+    }
 };
-AuthService.ctorParameters = () => [];
-AuthService = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.Injectable)({
+AuthService.ctorParameters = () => [
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpClient }
+];
+AuthService = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
         providedIn: 'root'
     })
 ], AuthService);
+
+
+
+/***/ }),
+
+/***/ 8691:
+/*!*****************************************************************!*\
+  !*** ./src/app/shared/account-modal/account-modal.component.ts ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "AccountModalComponent": () => (/* binding */ AccountModalComponent)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _account_modal_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./account-modal.component.html?ngResource */ 6958);
+/* harmony import */ var _account_modal_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./account-modal.component.scss?ngResource */ 9852);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ 2508);
+/* harmony import */ var src_app_auth_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/auth/auth.service */ 384);
+
+
+
+
+
+
+
+let AccountModalComponent = class AccountModalComponent {
+    constructor(modalCtrl, authService) {
+        this.modalCtrl = modalCtrl;
+        this.authService = authService;
+        this.typeCardAUX = '';
+        this.cliente = {
+            id: '',
+            name: '',
+            app: '',
+            apm: '',
+            number: '',
+            user: '',
+            card: ''
+        };
+        this.restaurante = {
+            id: '',
+            name: '',
+            number: '',
+            branch: '',
+            user: '',
+            dir: '',
+            card: ''
+        };
+        this.card = {
+            id: '',
+            type: '',
+            clabe: ''
+        };
+        this.adress = {
+            id: '',
+            calle: '',
+            district: '',
+            number: '',
+            reference: ''
+        };
+        this.tipoUser = this.authService.userType;
+        /*this.form = new FormGroup({
+          nameC: new FormControl(),
+          appC: new FormControl(),
+          apmC: new FormControl(),
+          phoneC: new FormControl(),
+          nameR: new FormControl(),
+          phoneR: new FormControl(),
+          branchR: new FormControl(),
+          streetR: new FormControl(),
+          districtR: new FormControl(),
+          numberR: new FormControl(),
+          referenceR: new FormControl(),
+          cardType: new FormControl(),
+          cardClabe: new FormControl()
+        });*/
+    }
+    ngOnInit() {
+        this.forma = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormGroup({
+            nameC: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl(null, {
+                updateOn: 'blur',
+                validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.maxLength(45)]
+            }),
+            appC: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl(null, {
+                updateOn: 'blur',
+                validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.maxLength(45)]
+            }),
+            apmC: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl(null, {
+                updateOn: 'blur',
+                validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.maxLength(45)]
+            }),
+            phoneC: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl(null, {
+                updateOn: 'blur',
+                validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__.Validators.maxLength(20)]
+            }),
+            nameR: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl(),
+            phoneR: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl(),
+            branchR: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl(),
+            streetR: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl(),
+            districtR: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl(),
+            numberR: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl(),
+            referenceR: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl(),
+            cardType: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl(),
+            cardClabe: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl()
+        });
+    }
+    cancel() {
+        return this.modalCtrl.dismiss(null, 'cancel');
+    }
+    confirm() {
+        if (this.tipoUser == 'C') {
+            return this.modalCtrl.dismiss({
+                userData: {
+                    usuario: this.tipoUser,
+                    nombre: this.cliente.name,
+                    app: this.cliente.app,
+                    apm: this.cliente.apm,
+                    telefono: this.cliente.number,
+                    tipo: this.typeCardAUX,
+                    clabe: this.card.clabe
+                }
+            }, 'confirm');
+        }
+        else {
+            return this.modalCtrl.dismiss({
+                userData: {
+                    usuario: this.tipoUser,
+                    nombreR: this.restaurante.name,
+                    telefonoR: this.restaurante.number,
+                    sucursalR: this.restaurante.branch,
+                    calleR: this.adress.calle,
+                    coloniaR: this.adress.district,
+                    numR: this.adress.number,
+                    referenciaR: this.adress.reference,
+                    tipoR: this.typeCardAUX,
+                    clabeR: this.card.clabe
+                }
+            }, 'confirm');
+        }
+    }
+    //Listener del evento del ion-radio-group para obtener el valor del ion-radio seleccionado
+    selectedValue($event) {
+        this.typeCardAUX = $event.target.value;
+    }
+};
+AccountModalComponent.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.ModalController },
+    { type: src_app_auth_auth_service__WEBPACK_IMPORTED_MODULE_2__.AuthService }
+];
+AccountModalComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
+        selector: 'app-account-modal',
+        template: _account_modal_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
+        styles: [_account_modal_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
+    })
+], AccountModalComponent);
+
+
+
+/***/ }),
+
+/***/ 1218:
+/*!*********************************************************!*\
+  !*** ./src/app/shared/map-modal/map-modal.component.ts ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MapModalComponent": () => (/* binding */ MapModalComponent)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _map_modal_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./map-modal.component.html?ngResource */ 6140);
+/* harmony import */ var _map_modal_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./map-modal.component.scss?ngResource */ 4167);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! leaflet */ 5836);
+/* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+
+
+
+let MapModalComponent = class MapModalComponent {
+    constructor(modalCtrl, renderer) {
+        this.modalCtrl = modalCtrl;
+        this.renderer = renderer;
+        this.center = [51.505, -0.09];
+    }
+    ngOnInit() { }
+    ngAfterViewInit() {
+        const viewCtrl = this.modalCtrl;
+        this.modalRef = this.modalCtrl;
+        const mapDiv = document.getElementById("map");
+        const map = leaflet__WEBPACK_IMPORTED_MODULE_2__.map(mapDiv).setView(this.center, 16);
+        this.mapRef = map;
+        leaflet__WEBPACK_IMPORTED_MODULE_2__.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            maxZoom: 19
+        }).addTo(map);
+        //L.control.scale().addTo(map);
+        //L.marker(this.center).addTo(map).bindPopup("PickedLocation").openPopup();
+        this.renderer.addClass(mapDiv, 'visible');
+        const resizeObserver = new ResizeObserver(() => {
+            map.invalidateSize();
+        });
+        resizeObserver.observe(mapDiv);
+        map.on('click', function (e) {
+            const selectedCoords = {
+                lat: e.latlng.lat,
+                lng: e.latlng.lng
+            };
+            viewCtrl.dismiss(selectedCoords);
+        });
+    }
+    onCancel() {
+        this.modalCtrl.dismiss();
+    }
+    ngOnDestroy() {
+        this.mapRef.off('click');
+    }
+};
+MapModalComponent.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.ModalController },
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Renderer2 }
+];
+MapModalComponent.propDecorators = {
+    mapElementRef: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.ViewChild, args: ['map',] }],
+    center: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input }]
+};
+MapModalComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
+        selector: 'app-map-modal',
+        template: _map_modal_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
+        styles: [_map_modal_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
+    })
+], MapModalComponent);
+
+
+
+/***/ }),
+
+/***/ 8042:
+/*!*****************************************************************************!*\
+  !*** ./src/app/shared/pickers/location-picker/location-picker.component.ts ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "LocationPickerComponent": () => (/* binding */ LocationPickerComponent)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _location_picker_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./location-picker.component.html?ngResource */ 8765);
+/* harmony import */ var _location_picker_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./location-picker.component.scss?ngResource */ 9074);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var _map_modal_map_modal_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../map-modal/map-modal.component */ 1218);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ 4139);
+
+
+
+
+
+
+
+let LocationPickerComponent = class LocationPickerComponent {
+    constructor(modalCtrl) {
+        this.modalCtrl = modalCtrl;
+        this.locationPick = new _angular_core__WEBPACK_IMPORTED_MODULE_3__.EventEmitter();
+    }
+    ngOnInit() { }
+    onPickLocation() {
+        this.modalCtrl.create({ component: _map_modal_map_modal_component__WEBPACK_IMPORTED_MODULE_2__.MapModalComponent }).then(modalEl => {
+            modalEl.onDidDismiss().then(modalData => {
+                if (!modalData.data) {
+                    return;
+                }
+                var pickedLocation = null;
+                var latitud = modalData.data.lat;
+                var longitud = modalData.data.lng;
+                this.getAddress(modalData.data.lat, modalData.data.lng)
+                    .then(address => {
+                    //console.log(address);
+                    pickedLocation = address;
+                    this.locationPick.emit(pickedLocation);
+                    return (0,rxjs__WEBPACK_IMPORTED_MODULE_4__.of)(this.getMapImage(latitud, longitud, 14)).subscribe(staticMapImageUrl => {
+                        this.selectedLocationImage = staticMapImageUrl;
+                    });
+                });
+            });
+            modalEl.present();
+        });
+    }
+    getAddress(lat, lng) {
+        var requestOptions = {
+            method: 'GET',
+        };
+        return fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lng}&apiKey=275b441f302b4ebeae5b95e445239c31`, requestOptions)
+            .then(response => response.json())
+            .then(geoData => {
+            if (geoData.features.length) {
+                return geoData.features[0].properties.formatted;
+            }
+            else {
+                console.log("No address found");
+                return null;
+            }
+        })
+            .catch(error => console.log('error', error));
+    }
+    //To get an image from the map where the coords are given
+    getMapImage(lat, lng, zoom) {
+        return `https://maps.geoapify.com/v1/staticmap?style=osm-carto&width=500&height=300&center=lonlat:${lng},${lat}&zoom=${zoom}&marker=lonlat:${lng},${lat};color:%23ff0000;size:medium&apiKey=275b441f302b4ebeae5b95e445239c31`;
+    }
+};
+LocationPickerComponent.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.ModalController }
+];
+LocationPickerComponent.propDecorators = {
+    locationPick: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Output }]
+};
+LocationPickerComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
+        selector: 'app-location-picker',
+        template: _location_picker_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
+        styles: [_location_picker_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
+    })
+], LocationPickerComponent);
+
+
+
+/***/ }),
+
+/***/ 4466:
+/*!*****************************************!*\
+  !*** ./src/app/shared/shared.module.ts ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "SharedModule": () => (/* binding */ SharedModule)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ 4666);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/forms */ 2508);
+/* harmony import */ var _map_modal_map_modal_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./map-modal/map-modal.component */ 1218);
+/* harmony import */ var _pickers_location_picker_location_picker_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pickers/location-picker/location-picker.component */ 8042);
+/* harmony import */ var _account_modal_account_modal_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./account-modal/account-modal.component */ 8691);
+
+
+
+
+
+
+
+
+let SharedModule = class SharedModule {
+};
+SharedModule = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.NgModule)({
+        declarations: [_pickers_location_picker_location_picker_component__WEBPACK_IMPORTED_MODULE_1__.LocationPickerComponent, _map_modal_map_modal_component__WEBPACK_IMPORTED_MODULE_0__.MapModalComponent, _account_modal_account_modal_component__WEBPACK_IMPORTED_MODULE_2__.AccountModalComponent],
+        imports: [_angular_common__WEBPACK_IMPORTED_MODULE_5__.CommonModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.IonicModule, _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_7__.ReactiveFormsModule],
+        exports: [_pickers_location_picker_location_picker_component__WEBPACK_IMPORTED_MODULE_1__.LocationPickerComponent, _map_modal_map_modal_component__WEBPACK_IMPORTED_MODULE_0__.MapModalComponent],
+        entryComponents: [_map_modal_map_modal_component__WEBPACK_IMPORTED_MODULE_0__.MapModalComponent]
+    })
+], SharedModule);
 
 
 
@@ -252,7 +754,8 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 const environment = {
     production: false,
-    apiURL: 'http://192.168.36.102:3000'
+    //apiURL: 'http://UbuntuServer:5000'
+    apiURL: 'http://192.168.0.103:5000'
 };
 /*
  * For easier debugging in development mode, you can import the following file
@@ -548,6 +1051,39 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
+/***/ 9852:
+/*!******************************************************************************!*\
+  !*** ./src/app/shared/account-modal/account-modal.component.scss?ngResource ***!
+  \******************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhY2NvdW50LW1vZGFsLmNvbXBvbmVudC5zY3NzIn0= */";
+
+/***/ }),
+
+/***/ 4167:
+/*!**********************************************************************!*\
+  !*** ./src/app/shared/map-modal/map-modal.component.scss?ngResource ***!
+  \**********************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "@import url(\"https://unpkg.com/leaflet@1.9.3/dist/leaflet.css\");\n.map {\n  position: absolute;\n  height: 100%;\n  width: 100%;\n  background-color: transparent;\n  opacity: 0;\n  transition: opacity 150ms ease-in;\n}\n.map.visible {\n  opacity: 1;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1hcC1tb2RhbC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBUSwrREFBQTtBQUNSO0VBQ0ksa0JBQUE7RUFDQSxZQUFBO0VBQ0EsV0FBQTtFQUVBLDZCQUFBO0VBRUEsVUFBQTtFQUNBLGlDQUFBO0FBREo7QUFJQTtFQUNJLFVBQUE7QUFESiIsImZpbGUiOiJtYXAtbW9kYWwuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJAaW1wb3J0IHVybChcImh0dHBzOi8vdW5wa2cuY29tL2xlYWZsZXRAMS45LjMvZGlzdC9sZWFmbGV0LmNzc1wiKTtcbi5tYXAge1xuICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICBoZWlnaHQ6IDEwMCU7XG4gICAgd2lkdGg6IDEwMCU7XG5cbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDtcblxuICAgIG9wYWNpdHk6IDA7XG4gICAgdHJhbnNpdGlvbjogb3BhY2l0eSAxNTBtcyBlYXNlLWluO1xufVxuXG4ubWFwLnZpc2libGUge1xuICAgIG9wYWNpdHk6IDE7XG59Il19 */";
+
+/***/ }),
+
+/***/ 9074:
+/*!******************************************************************************************!*\
+  !*** ./src/app/shared/pickers/location-picker/location-picker.component.scss?ngResource ***!
+  \******************************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = ".picker {\n  width: 40vh;\n  max-width: 90%;\n  height: 20rem;\n  max-height: 30vh;\n  border: 1px solid var(--ion-color-primary);\n  margin: auto;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.location-image {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImxvY2F0aW9uLXBpY2tlci5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLFdBQUE7RUFDQSxjQUFBO0VBQ0EsYUFBQTtFQUNBLGdCQUFBO0VBQ0EsMENBQUE7RUFDQSxZQUFBO0VBQ0EsYUFBQTtFQUNBLHVCQUFBO0VBQ0EsbUJBQUE7QUFDSjs7QUFFQTtFQUNJLFdBQUE7RUFDQSxZQUFBO0VBQ0EsaUJBQUE7QUFDSiIsImZpbGUiOiJsb2NhdGlvbi1waWNrZXIuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIucGlja2VyIHtcbiAgICB3aWR0aDogNDB2aDtcbiAgICBtYXgtd2lkdGg6IDkwJTtcbiAgICBoZWlnaHQ6IDIwcmVtO1xuICAgIG1heC1oZWlnaHQ6IDMwdmg7XG4gICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0taW9uLWNvbG9yLXByaW1hcnkpO1xuICAgIG1hcmdpbjogYXV0bztcbiAgICBkaXNwbGF5OiBmbGV4O1xuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG59XG5cbi5sb2NhdGlvbi1pbWFnZSB7XG4gICAgd2lkdGg6IDEwMCU7XG4gICAgaGVpZ2h0OiAxMDAlO1xuICAgIG9iamVjdC1maXQ6IGNvdmVyO1xufSJdfQ== */";
+
+/***/ }),
+
 /***/ 3383:
 /*!***********************************************!*\
   !*** ./src/app/app.component.html?ngResource ***!
@@ -555,7 +1091,40 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /***/ ((module) => {
 
 "use strict";
-module.exports = "<ion-app>\n  <ion-menu contentId=\"menu-content\" menuId=\"menu-content\" side=\"start\" type=\"overlay\">\n    <ion-header>\n      <ion-toolbar>\n        <ion-title>Menu</ion-title>\n      </ion-toolbar>\n    </ion-header>\n\n    <ion-content>\n      <ion-list>\n        <ion-menu-toggle menu=\"menu-content\">\n          <ion-item lines=\"none\" routerLink=\"/home/tabs/discover\">\n            <ion-icon slot=\"start\" name=\"business\"></ion-icon>\n            <ion-label>Discover New Places</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n        <ion-menu-toggle menu=\"menu-content\">\n          <ion-item lines=\"none\" routerLink=\"/bookings\">\n            <ion-icon slot=\"start\" name=\"checkbox-outline\"></ion-icon>\n            <ion-label>Your Bookings</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n        <ion-menu-toggle menu=\"menu-content\">\n          <ion-item lines=\"none\" (click)=\"onLogout()\" button>\n            <ion-icon slot=\"start\" name=\"exit\"></ion-icon>\n            <ion-label>Logout</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n      </ion-list>\n    </ion-content>\n  </ion-menu>\n\n  <ion-router-outlet main id=\"menu-content\"></ion-router-outlet>\n</ion-app>\n";
+module.exports = "<ion-app>\n  <ion-menu contentId=\"menu-content\" menuId=\"menu-content\" side=\"start\" type=\"overlay\">\n    <ion-header>\n      <ion-toolbar>\n        <ion-title>Menu</ion-title>\n      </ion-toolbar>\n    </ion-header>\n\n    <ion-content>\n      <ion-list>\n        <ion-menu-toggle menu=\"menu-content\">\n          <ion-item lines=\"none\" routerLink=\"/home/tabs/discover\">\n            <ion-icon slot=\"start\" name=\"restaurant-outline\"></ion-icon>\n            <ion-label>Explore Restaurants</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n        <!--\n        <ion-menu-toggle menu=\"menu-content\" *ngIf=\"tipo == 'C'\"> \n          <ion-item lines=\"none\" routerLink=\"/bookings\">\n            <ion-icon slot=\"start\" name=\"person-circle-outline\"></ion-icon>\n            <ion-label>Account</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n        <ion-menu-toggle menu=\"menu-content\" *ngIf=\"tipo == 'R'\"> \n          <ion-item lines=\"none\" routerLink=\"/bookings\">\n            <ion-icon slot=\"start\" name=\"receipt-outline\"></ion-icon>\n            <ion-label>Manage Restaurant</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n      -->\n        <ion-menu-toggle menu=\"menu-content\">\n          <ion-item lines=\"none\" (click)=\"onLogout()\" button>\n            <ion-icon slot=\"start\" name=\"exit\"></ion-icon>\n            <ion-label>Logout</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n      </ion-list>\n    </ion-content>\n  </ion-menu>\n\n  <ion-router-outlet main id=\"menu-content\"></ion-router-outlet>\n</ion-app>\n";
+
+/***/ }),
+
+/***/ 6958:
+/*!******************************************************************************!*\
+  !*** ./src/app/shared/account-modal/account-modal.component.html?ngResource ***!
+  \******************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Almost there</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button (click)=\"confirm()\" [strong]=\"true\">Finish</ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-padding\">\n  <form [formGroup]=\"forma\">\n    <ion-grid fixed>\n      <ion-row *ngIf=\"tipoUser == 'C'\">\n        <ion-col size-sm=\"6\" offsetSm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Name</ion-label>\n            <ion-input type=\"text\" [(ngModel)]=\"cliente.name\" autocomplete autocorrect formControlName=\"nameC\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row *ngIf=\"tipoUser == 'C'\"> \n        <ion-col size-sm=\"6\" offsetSm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Paternal Last Name</ion-label>\n            <ion-input type=\"text\" [(ngModel)]=\"cliente.app\" autocomplete autocorrect formControlName=\"appC\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row *ngIf=\"tipoUser == 'C'\"> \n        <ion-col size-sm=\"6\" offsetSm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Maternal Last Name</ion-label>\n            <ion-input type=\"text\" [(ngModel)]=\"cliente.apm\" autocomplete autocorrect formControlName=\"apmC\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row *ngIf=\"tipoUser == 'C'\">\n        <ion-col size-sm=\"6\" offsetSm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Phone Number</ion-label>\n            <ion-input type=\"number\" [(ngModel)]=\"cliente.number\" autocomplete autocorrect formControlName=\"phoneC\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <!--Restaurante-->\n      <ion-row *ngIf=\"tipoUser == 'R'\">\n        <ion-col size-sm=\"6\" offsetSm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Restaurant Name</ion-label>\n            <ion-input type=\"text\" [(ngModel)]=\"restaurante.name\" autocomplete autocorrect formControlName=\"nameR\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row *ngIf=\"tipoUser == 'R'\">\n        <ion-col size-sm=\"6\" offsetSm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Phone Number</ion-label>\n            <ion-input type=\"number\" [(ngModel)]=\"restaurante.number\" autocomplete autocorrect formControlName=\"phoneR\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row *ngIf=\"tipoUser == 'R'\">\n        <ion-col size-sm=\"6\" offsetSm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Branch</ion-label>\n            <ion-input type=\"text\" [(ngModel)]=\"restaurante.branch\" autocomplete autocorrect formControlName=\"branchR\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row *ngIf=\"tipoUser == 'R'\">\n        <ion-col size-sm=\"6\" offsetSm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Address Street</ion-label>\n            <ion-input type=\"text\" [(ngModel)]=\"adress.calle\" autocomplete autocorrect formControlName=\"streetR\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row *ngIf=\"tipoUser == 'R'\">\n        <ion-col size-sm=\"6\" offsetSm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Address District</ion-label>\n            <ion-input type=\"text\" [(ngModel)]=\"adress.district\" autocomplete autocorrect formControlName=\"districtR\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row *ngIf=\"tipoUser == 'R'\">\n        <ion-col size-sm=\"6\" offsetSm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Address Number</ion-label>\n            <ion-input type=\"number\" [(ngModel)]=\"adress.number\" autocomplete autocorrect formControlName=\"numberR\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <ion-row *ngIf=\"tipoUser == 'R'\"> \n        <ion-col size-sm=\"6\" offsetSm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Address Reference</ion-label>\n            <ion-input type=\"text\" [(ngModel)]=\"adress.reference\" autocomplete autocorrect formControlName=\"referenceR\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <!--Tarjeta-->\n      <ion-row>\n        <ion-radio-group class=\"opciones\" formControlName=\"cardType\" (ionChange)=\"selectedValue($event)\">\n          <ion-label position=\"floating\">Card Type</ion-label>\n          <ion-item>\n            <ion-radio slot=\"start\" value=\"D\"></ion-radio>\n            <ion-label>Debit</ion-label> \n          </ion-item>\n          <ion-item>\n            <ion-radio slot=\"start\" value=\"C\"></ion-radio>\n            <ion-label>Credit</ion-label>\n        </ion-item>\n        </ion-radio-group>\n      </ion-row>\n\n      <ion-row>\n        <ion-col size-sm=\"6\" offsetSm=\"3\">\n          <ion-item>\n            <ion-label position=\"floating\">Card Clabe</ion-label>\n            <ion-input type=\"number\" [(ngModel)]=\"card.clabe\" autocomplete autocorrect formControlName=\"cardClabe\"></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n\n\n    </ion-grid>\n  </form>\n</ion-content>\n";
+
+/***/ }),
+
+/***/ 6140:
+/*!**********************************************************************!*\
+  !*** ./src/app/shared/map-modal/map-modal.component.html?ngResource ***!
+  \**********************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>{{ title }}</ion-title>\n    <ion-buttons slot=\"primary\">\n      <ion-button (click)=\"onCancel()\">{{ closeButtonText }}</ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div class=\"map\" id=\"map\" #map></div>\n</ion-content>\n";
+
+/***/ }),
+
+/***/ 8765:
+/*!******************************************************************************************!*\
+  !*** ./src/app/shared/pickers/location-picker/location-picker.component.html?ngResource ***!
+  \******************************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "<div class=\"picker\">\n  <ion-spinner color=\"primary\" *ngIf=\"isLoading\"></ion-spinner>\n  <ion-img \n    role=\"button\"\n    class=\"location-image\" \n    (click)=\"onPickLocation()\"\n    [src]=\"selectedLocationImage\" \n    *ngIf=\"selectedLocationImage && !isLoading\">\n  </ion-img>\n  <ion-button color=\"primary\" (click)=\"onPickLocation()\" *ngIf=\"!selectedLocationImage && !isLoading\">\n    <ion-icon name=\"map\" slot=\"start\"></ion-icon>\n    <ion-label>Select Location</ion-label>\n  </ion-button>\n</div>\n";
 
 /***/ })
 

@@ -29,7 +29,6 @@ const routes: Routes = [
         path: '',
 
     loadChildren: () => import('./pruebas/pruebas.module').then( m => m.PruebasPageModule),
-    //canLoad: [AuthGuard]
       },
     {
       path: ':restaurantId',

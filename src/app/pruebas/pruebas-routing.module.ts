@@ -20,11 +20,7 @@ const routes: Routes = [
         loadChildren: () => import('./pedido/producto/producto.module').then( m=>m.ProductoPageModule)
       }
     ]
-    },
-    // {
-    //   path: ':restaurantId',
-    //   loadChildren: () => import('./pedido/pedido.module').then( m=>m.PedidoPageModule)
-    // }
+    }
 ];
 
 @NgModule({

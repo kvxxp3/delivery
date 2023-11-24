@@ -68,7 +68,56 @@ let PlacesService = class PlacesService {
             new _place_model__WEBPACK_IMPORTED_MODULE_1__.Place('ORIGINAL2', 'Killarney Mansion', "His majesty's manor", 'https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto', 399.99, new Date('2023-04-01'), new Date('2023-04-28'), 'abc'),
             new _place_model__WEBPACK_IMPORTED_MODULE_1__.Place('ORIGINAL3', 'Ciudad Maderas Mansion', 'One of the best places to stay in Mexico', 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto', 159.99, new Date('2023-06-24'), new Date('2023-12-31'), 'abc')
         ]);
+        this.productoAux = {
+            nombre: 'product',
+            des: 'string',
+            precio: 'string',
+            res: 0,
+            imagen: 'string'
+        };
+        this.productoUpdateAux = {
+            nombre: 'product',
+            des: 'string',
+            precio: 'string',
+            imagen: 'string'
+        };
     }
+    //toma todos los productos por el id del restaurante
+    getProductsByID(id) {
+        return this.http.get(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.apiURL}/productos/restaurante/${id}`);
+    }
+    //toma un producto por su id
+    getProductByID(id) {
+        return this.http.get(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.apiURL}/productos/${id}`);
+    }
+    ////////////////////////////////////////////////
+    //addProduct(name: string, desc: string, price: string, rest: number, foto: string): Observable<any>{
+    //  return this.http.post<any>(`${environment.apiURL}/producto/add`, {nombre: {name}, des: {desc}, precio: {price}, res: {rest}, imagen: {foto}});
+    //}
+    addProduct(name, desc, price, rest, foto) {
+        this.productoAux.nombre = name;
+        this.productoAux.des = desc;
+        this.productoAux.precio = price;
+        this.productoAux.res = rest;
+        this.productoAux.imagen = foto;
+        console.log("OBJETO ANTES DE ENVIAR: " + this.productoAux.res);
+        return this.http.post(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.apiURL}/producto/add`, this.productoAux);
+    }
+    deleteProduct(id) {
+        return this.http.delete(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.apiURL}/producto/delete/${id}`);
+    }
+    updateProduct(id, name, desc, price, foto) {
+        this.productoUpdateAux.nombre = name;
+        this.productoUpdateAux.des = desc;
+        this.productoUpdateAux.precio = price;
+        this.productoUpdateAux.imagen = foto;
+        console.log("OBJETO ANTES DE ENVIAR: " + this.productoUpdateAux.nombre);
+        return this.http.put(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.apiURL}/producto/update/${id}`, this.productoUpdateAux);
+    }
+    getRestaurants() {
+        return this.http.get(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.apiURL}/restaurantes`);
+    }
+    ////////////////////////////////////////////////
     //PAST PROJECT
     get places() {
         return this.placess.asObservable();

@@ -8,16 +8,14 @@ import { AuthService } from './auth/auth.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+  tipo: any;
+
   constructor(private authService: AuthService, private router: Router) {
-    this.authService.userType;
+    this.tipo = this.authService.userType;
   }
 
   onLogout(){
     this.authService.logout();
     this.router.navigateByUrl('/auth');
-  }
-
-  checar(){
-
   }
 }

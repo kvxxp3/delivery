@@ -82,10 +82,6 @@ export class PlacesService {
 
   ////////////////////////////////////////////////
 
-  //addProduct(name: string, desc: string, price: string, rest: number, foto: string): Observable<any>{
-  //  return this.http.post<any>(`${environment.apiURL}/producto/add`, {nombre: {name}, des: {desc}, precio: {price}, res: {rest}, imagen: {foto}});
-  //}
-
   addProduct(name: string, desc: string, price: string, rest: number, foto: string): Observable<ProductoAdd>{
     this.productoAux.nombre = name;
     this.productoAux.des = desc;

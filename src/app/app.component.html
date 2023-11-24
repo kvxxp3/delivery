@@ -14,20 +14,14 @@
             <ion-label>Explore Restaurants</ion-label>
           </ion-item>
         </ion-menu-toggle>
-        <!--
+        
         <ion-menu-toggle menu="menu-content" *ngIf="tipo == 'C'"> 
           <ion-item lines="none" routerLink="/bookings">
-            <ion-icon slot="start" name="person-circle-outline"></ion-icon>
-            <ion-label>Account</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-        <ion-menu-toggle menu="menu-content" *ngIf="tipo == 'R'"> 
-          <ion-item lines="none" routerLink="/bookings">
             <ion-icon slot="start" name="receipt-outline"></ion-icon>
-            <ion-label>Manage Restaurant</ion-label>
+            <ion-label>Review</ion-label>
           </ion-item>
         </ion-menu-toggle>
-      -->
+     
         <ion-menu-toggle menu="menu-content">
           <ion-item lines="none" (click)="onLogout()" button>
             <ion-icon slot="start" name="exit"></ion-icon>

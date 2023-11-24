@@ -87,19 +87,19 @@ MERGED from [androidx.startup:startup-runtime:1.0.0] /home/karla/.gradle/caches/
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.8.0] /home/karla/.gradle/caches/transforms-3/fe0dba67bfac75aa58e7b93d33808165/transformed/core-1.8.0/AndroidManifest.xml:24:18-86
 	android:supportsRtl
-		ADDED from /home/karla/Documentos/booking/android/app/src/main/AndroidManifest.xml:11:9-35
+		ADDED from /home/karla/Documentos/booking/android/app/src/main/AndroidManifest.xml:10:9-35
 	android:label
-		ADDED from /home/karla/Documentos/booking/android/app/src/main/AndroidManifest.xml:9:9-41
+		ADDED from /home/karla/Documentos/booking/android/app/src/main/AndroidManifest.xml:8:9-41
 	android:roundIcon
-		ADDED from /home/karla/Documentos/booking/android/app/src/main/AndroidManifest.xml:10:9-54
+		ADDED from /home/karla/Documentos/booking/android/app/src/main/AndroidManifest.xml:9:9-54
 	android:icon
-		ADDED from /home/karla/Documentos/booking/android/app/src/main/AndroidManifest.xml:8:9-43
+		ADDED from /home/karla/Documentos/booking/android/app/src/main/AndroidManifest.xml:7:9-43
 	android:allowBackup
-		ADDED from /home/karla/Documentos/booking/android/app/src/main/AndroidManifest.xml:7:9-35
+		ADDED from /home/karla/Documentos/booking/android/app/src/main/AndroidManifest.xml:6:9-35
 	android:theme
-		ADDED from /home/karla/Documentos/booking/android/app/src/main/AndroidManifest.xml:12:9-40
+		ADDED from /home/karla/Documentos/booking/android/app/src/main/AndroidManifest.xml:11:9-40
 	android:usesCleartextTraffic
-		ADDED from /home/karla/Documentos/booking/android/app/src/main/AndroidManifest.xml:6:7-42
+		ADDED from /home/karla/Documentos/booking/android/app/src/main/AndroidManifest.xml:12:9-44
 activity#io.ionic.starter.MainActivity
 ADDED from /home/karla/Documentos/booking/android/app/src/main/AndroidManifest.xml:14:9-27:20
 	android:label

@@ -54,21 +54,6 @@ export class AccountModalComponent implements OnInit {
 
   constructor(private modalCtrl: ModalController, private authService: AuthService) {
     this.tipoUser=this.authService.userType;
-    /*this.form = new FormGroup({
-      nameC: new FormControl(),
-      appC: new FormControl(),
-      apmC: new FormControl(),
-      phoneC: new FormControl(),
-      nameR: new FormControl(),
-      phoneR: new FormControl(),
-      branchR: new FormControl(),
-      streetR: new FormControl(),
-      districtR: new FormControl(),
-      numberR: new FormControl(),
-      referenceR: new FormControl(),
-      cardType: new FormControl(),
-      cardClabe: new FormControl()
-    });*/
   }
 
   ngOnInit(){   

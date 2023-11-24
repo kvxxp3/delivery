@@ -33,37 +33,7 @@ export class EditOfferPage implements OnInit {
     private loadingController: LoadingController
   ) { }
 
-  ionViewWillEnter(){
-    //this.getProductById(this.getIDfromURL());
-  }
-
   ngOnInit() {
-    // this.route.paramMap.subscribe(paramMap => {
-    //   this.productSub = this.placesService.getPlace(paramMap.get('placeId')).subscribe(place => {
-    //     this.place = place;
-    //     this.form = new FormGroup({
-    //       title: new FormControl(this.place.title, {
-    //         updateOn: 'blur',
-    //         validators: [Validators.required]
-    //       }),
-    //       description: new FormControl(this.place.description, {
-    //         updateOn: 'blur',
-    //         validators: [Validators.required, Validators.maxLength(180)]
-    //       })
-    //     });
-    //   });
-    // });
-
-    // this.form = new FormGroup({
-    //   title: new FormControl(this.placeID.title, {
-    //     updateOn: 'blur',
-    //     validators: [Validators.required]
-    //   }),
-    //   description: new FormControl(this.placeID.description, {
-    //     updateOn: 'blur',
-    //     validators: [Validators.required, Validators.maxLength(180)]
-    //   })
-    // });
     this.form = new FormGroup({
       title: new FormControl(null, {
         updateOn: 'blur',
@@ -83,7 +53,6 @@ export class EditOfferPage implements OnInit {
       })
     });
 
-    //this.getProductById(this.getIDfromURL());
     this.obtenerDatos();
   }
 
@@ -99,26 +68,12 @@ export class EditOfferPage implements OnInit {
     this.placesService.getProductByID(product).subscribe(
       (resp: any) => {
         console.log(resp);
-        /*this.product = {
-          id: resp.id,
-          nombre: resp.nombre,
-          des: resp.des,
-          precio: resp.precio,
-          restaurante: resp.restaurante,
-          foto: resp.foto
-        };*/
         this.product.id = resp.id;
         this.product.nombre = resp.nombre;
         this.product.des = resp.des;
         this.product.precio = resp.precio;
         this.product.restaurante = resp.restaurante;
         this.product.foto = resp.foto;
-
-        /*
-        this.form.value.title = this.product.nombre;
-        this.form.value.description = this.product.des;
-        this.form.value.price = this.product.precio;
-        this.form.value.image = this.product.foto;*/
 
         console.log('INFO RECIBIDA:');
         console.log('product id: '+this.product.id);

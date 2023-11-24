@@ -160,7 +160,7 @@ export class AuthPage implements OnInit {
           loadingEl.dismiss();
           this.form.reset();
           //this.openModal();
-          this.darAltaUser();
+          //this.darAltaUser();
 
           this.router.navigate(['/home/tabs/discover']);
           return;
@@ -225,23 +225,8 @@ export class AuthPage implements OnInit {
           const data = resultData.data.userData;
           console.log(data);
           if(data.usuario == 'C'){
-            /*this.auxCl.name = data.nombre;
-            this.auxCl.app = data.app;
-            this.auxCl.apm = data.apm;
-            this.auxCl.number = data.telefono;
-            this.auxTarj.type = data.tipo;
-            this.auxTarj.clabe = data.clabe;*/
             
           }else if(data.usuario == 'R'){
-            /*this.auxRes.name = data.nombreR;
-            this.auxRes.number = data.telefonoR;
-            this.auxRes.branch = data.sucursalR;
-            this.auxDir.calle = data.calleR;
-            this.auxDir.district = data.coloniaR;
-            this.auxDir.number = data.numR;
-            this.auxDir.reference = data.referenciaR;
-            this.auxTarj.type = data.tipoR;
-            this.auxTarj.clabe = data.clabeR;*/
             
           }
           
@@ -250,63 +235,61 @@ export class AuthPage implements OnInit {
     });
   }
 
-  darAltaUser(){
-    if(this.userAux.type == 'C'){
-            this.auxCl.name = "Paola";
-            this.auxCl.app = "Alba";
-            this.auxCl.apm = "Bugarin";
-            this.auxCl.number = "4494140663";
-            this.auxTarj.type = 'D';
-            this.auxTarj.clabe = "1234567890";
-    }
-    if(this.userAux.type == 'R'){
+  // darAltaUser(){
+  //   if(this.userAux.type == 'C'){
+  //           this.auxCl.name = "Paola";
+  //           this.auxCl.app = "Alba";
+  //           this.auxCl.apm = "Bugarin";
+  //           this.auxCl.number = "4494140663";
+  //           this.auxTarj.type = 'D';
+  //           this.auxTarj.clabe = "1234567890";
+  //   }
+  //   if(this.userAux.type == 'R'){
 
-            this.auxRes.name = "Michiladas";
-            this.auxRes.number = "4491234567";
-            this.auxRes.branch = "Norte";
-            this.auxDir.calle = "Av. Universidad";
-            this.auxDir.district = "Fatima";
-            this.auxDir.number = "102";
-            this.auxDir.reference = "Junto a la UAA";
-            this.auxTarj.type = "C";
-            this.auxTarj.clabe = "1109876543";
-    }
-    //IF el tipo usuario es R da de alta direccion
-    if(this.userAux.type == 'R'){
-      //let dir = 
-      this.authService.postDirSync(this.auxDir.calle, this.auxDir.district, Number(this.auxDir.number), this.auxDir.reference);
-      //console.log('SE REGISTRA LA DIR: ' + dir);
-      //get id de la dir
-      this.idDir = this.authService.getIDDIR(this.auxDir.calle, Number(this.auxDir.number));
-      this.authService.updateIDDireccion(this.idDir);
-    }
-    //AMBOS DAN ALTA TARJETA
-    //let tarjeta = 
-    this.authService.postTarjetaSync(this.auxTarj.type, this.auxTarj.clabe);
-    console.log('SE REGISTRA LA TARJETA: ' );
-    //get id de la dir
-    this.idTarj = this.authService.getIDDIR(this.auxDir.calle, Number(this.auxDir.number));
-    this.authService.updateIDTarjeta(this.idTarj);
+  //           this.auxRes.name = "Michiladas";
+  //           this.auxRes.number = "4491234567";
+  //           this.auxRes.branch = "Norte";
+  //           this.auxDir.calle = "Av. Universidad";
+  //           this.auxDir.district = "Fatima";
+  //           this.auxDir.number = "102";
+  //           this.auxDir.reference = "Junto a la UAA";
+  //           this.auxTarj.type = "C";
+  //           this.auxTarj.clabe = "1109876543";
+  //   }
+  //   //IF el tipo usuario es R da de alta direccion
+  //   if(this.userAux.type == 'R'){
+  //     //let dir = 
+  //     this.authService.postDirSync(this.auxDir.calle, this.auxDir.district, Number(this.auxDir.number), this.auxDir.reference);
+  //     //console.log('SE REGISTRA LA DIR: ' + dir);
+  //     //get id de la dir
+  //     this.idDir = this.authService.getIDDIR(this.auxDir.calle, Number(this.auxDir.number));
+  //     this.authService.updateIDDireccion(this.idDir);
+  //   }
+  //   //AMBOS DAN ALTA TARJETA
+  //   //let tarjeta = 
+  //   this.authService.postTarjetaSync(this.auxTarj.type, this.auxTarj.clabe);
+  //   console.log('SE REGISTRA LA TARJETA: ' );
+  //   //get id de la dir
+  //   this.idTarj = this.authService.getIDDIR(this.auxDir.calle, Number(this.auxDir.number));
+  //   this.authService.updateIDTarjeta(this.idTarj);
 
-    //IF R DA DE ALTA RESTAURANTE
-    if(this.userAux.type == 'R'){
-      //let res = 
-      //this.authService.postRestaurantSync(this.auxRes.name, this.auxRes.number, this.auxRes.branch, this.idGlobal, this.idDir, this.idTarj);
-      this.authService.postRestaurant(this.auxRes.name, this.auxRes.number, this.auxRes.branch, this.idGlobal, this.idDir, this.idTarj);
+  //   //IF R DA DE ALTA RESTAURANTE
+  //   if(this.userAux.type == 'R'){
+  //     //let res = 
+  //     //this.authService.postRestaurantSync(this.auxRes.name, this.auxRes.number, this.auxRes.branch, this.idGlobal, this.idDir, this.idTarj);
+  //     this.authService.postRestaurant(this.auxRes.name, this.auxRes.number, this.auxRes.branch, this.idGlobal, this.idDir, this.idTarj);
       
-      //console.log('SE REGISTRA EL RESTAURANTE: ' + res);
-    }else{
-      //ELSE ALTA CLIENTE
-      ///let cl = 
-      //this.authService.postClienteSync(this.auxCl.name, this.auxCl.app, this.auxCl.apm, this.auxCl.number, this.idGlobal, this.idTarj);
-      this.authService.postCliente(this.auxCl.name, this.auxCl.app, this.auxCl.apm, this.auxCl.number, this.idGlobal, this.idTarj);
-      //console.log('SE REGISTRA EL CLIENTE: ' + cl);
-   }  
-  }
+  //     //console.log('SE REGISTRA EL RESTAURANTE: ' + res);
+  //   }else{
+  //     //ELSE ALTA CLIENTE
+  //     ///let cl = 
+  //     //this.authService.postClienteSync(this.auxCl.name, this.auxCl.app, this.auxCl.apm, this.auxCl.number, this.idGlobal, this.idTarj);
+  //     this.authService.postCliente(this.auxCl.name, this.auxCl.app, this.auxCl.apm, this.auxCl.number, this.idGlobal, this.idTarj);
+  //     //console.log('SE REGISTRA EL CLIENTE: ' + cl);
+  //  }  
+  // }
 
   dismiss() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
     this.modalCtrl.dismiss({
       'dismissed': true
     });

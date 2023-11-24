@@ -22,17 +22,7 @@
                 formControlName="userId"
               ></ion-input>
             </ion-item>
-            <!--
-            <ion-item *ngIf="isLogged">
-              <ion-label position="floating">Type</ion-label>
-              <ion-input
-                type="text"
-                autocomplete
-                autocorrect
-                formControlName="type"
-              ></ion-input>
-            </ion-item>
-            -->
+            
             <ion-row class="opciones" *ngIf="isLogged">
               <ion-radio-group class="opciones" formControlName="type" (ionChange)="selectedValue($event)">
                 <ion-item>

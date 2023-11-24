@@ -1,6 +1,6 @@
 {
     "/api": {
-    "target": "http://CasaAgs:5000",
+    "target": "http://UbuntuServer:5000",
     "secure": false
     }
     }

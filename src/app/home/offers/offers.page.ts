@@ -1,12 +1,9 @@
 /* eslint-disable max-len */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { AlertController, InfiniteScrollCustomEvent, IonItemSliding, LoadingController } from '@ionic/angular';
-import { Subscription } from 'rxjs';
+import { AlertController, IonItemSliding, LoadingController } from '@ionic/angular';
 import { AuthService } from 'src/app/auth/auth.service';
-import { Restaurantes } from 'src/app/interfaces/restaurantes';
 import { Productos } from 'src/app/pruebas/pedido/producto.model';
-import { Place } from '../place.model';
 import { PlacesService } from '../places.service';
 
 @Component({
@@ -71,8 +68,6 @@ export class OffersPage implements OnDestroy {
     };
     this.someSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        // Here is the dashing line comes in the picture.
-        // You need to tell the router that, you didn't visit or load the page previously, so mark the navigated flag to false as below.
         this.router.navigated = false;
       }
     });

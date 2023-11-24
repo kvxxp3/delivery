@@ -1,7 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
-import { MapModalComponent } from '../../map-modal/map-modal.component';
 import { of } from 'rxjs';
 
 @Component({
@@ -15,34 +14,7 @@ export class LocationPickerComponent implements OnInit {
 
   constructor(private modalCtrl: ModalController) { }
 
-  ngOnInit() {}
-  
-  onPickLocation(){
-    this.modalCtrl.create({component: MapModalComponent}).then(modalEl => {
-      modalEl.onDidDismiss().then(modalData => {
-        if(!modalData.data){
-          return;
-        }
-
-        var pickedLocation : string = null;
-        var latitud: number = modalData.data.lat;
-        var longitud: number = modalData.data.lng;
-
-        this.getAddress(modalData.data.lat, modalData.data.lng)
-        .then(address => {
-          //console.log(address);
-          pickedLocation = address;
-          this.locationPick.emit(pickedLocation);
-          return of(this.getMapImage(latitud, longitud, 14)).subscribe(staticMapImageUrl => {
-            this.selectedLocationImage = staticMapImageUrl;
-          });
-        });
-        
-      });
-      modalEl.present();
-    });
-  }
-  
+  ngOnInit() {}  
 
   private getAddress(lat: number, lng: number){
     var requestOptions = {

@@ -12,52 +12,11 @@ export class BookingService {
   private bookingss = new BehaviorSubject<Booking[]>([]);
 
   constructor(private authService: AuthService, private http: HttpClient) { }
-
   
   get bookings() {
     return this.bookingss.asObservable();
   }
-  
 
-  /*
-  addBooking(
-    placeId: string,
-    placeTitle: string,
-    placeImg: string,
-    firstName: string,
-    lastName: string,
-    guestNumber: number,
-    dateFrom: Date,
-    dateTo: Date
-  ) {
-    const newBooking = new Booking(
-      Math.random().toString(),
-      placeId,
-      this.authService.userId,
-      placeTitle,
-      placeImg,
-      firstName,
-      lastName,
-      guestNumber,
-      dateFrom,
-      dateTo,
-      location
-    );
-    return this.bookings.pipe(take(1), delay(1000), tap(bookings => {
-      this.booking.next(bookings.concat(newBooking));
-    })
-    );
-  }
-
-  cancelBooking(bookingId: string) {
-    return this.bookings.pipe(take(1), delay(1000), tap(bookings => {
-      this.booking.next(bookings.filter(b => b.id !== bookingId));
-    })
-    );
-   }
-   */
-
-   //NEW
   listBookings(): Observable<Booking>{
     return this.http.get<Booking>(`${environment.apiURL}/bookings`);
   }
